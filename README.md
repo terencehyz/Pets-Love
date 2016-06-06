@@ -1,2 +1,2 @@
 # PY-Trade-for-Pets
-An hybrid app.
+A hybrid app.
