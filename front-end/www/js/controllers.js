@@ -1,6 +1,14 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {
+  $scope.a='';
+  $scope.b='';
+  $scope.c=0;
+  $.post("login.php",{id:$scope.a,pwd:$scope.b},function(){
+    
+  })
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -22,13 +30,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SalesCtrl',function ($scope) {
-  
+
 })
-  
+
 .controller('ReleaseCtrl',function ($scope) {
-  
-})  
-  
+
+})
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
