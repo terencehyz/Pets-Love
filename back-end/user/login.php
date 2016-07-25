@@ -22,6 +22,9 @@
 	$judge=false;
 	if($user_arrary['h_account']==$arrary['h_account']&&$user_arrary['h_password']==$arrary['h_password']){
 		$judge=true;
+		$hash=random(10);
+		$sql="update host set h_secret_key="$hash" where h_name='admin'";
+		mysql_query($sql);
 		echo "<script>alert('登录成功');window.location.href='captcha.php';</script>"
 		//header("127.0.0.1/Pets-Love/front-end") 跳转至初始界面
  	}
