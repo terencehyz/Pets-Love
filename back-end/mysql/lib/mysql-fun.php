@@ -29,7 +29,7 @@
 		if(mysql_query($sql)){
 			$return =1;
 			return $return;
-		}
+		} 
 		else{
 			$return =0;
 			return $return ;
@@ -45,5 +45,11 @@
 			$return =0;
 			return $return;
 		}
+	}
+	function fetch_assoc($table_name,$row_name,$key_value){
+		$sql="select * from $table_name where $row_name='$key_value'";
+		$query=mysql_query($sql);
+		$user_array=mysql_fetch_assoc($query);
+		return $user_array;
 	}
 ?>
