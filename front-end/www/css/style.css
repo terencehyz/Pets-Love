@@ -1,1 +1,21 @@
 /* Empty. Add your own CSS if you like */
+.create-account-p{
+  text-align: center;
+}
+.create-account-logo{
+  width: 30%;
+  margin: 8% 35% 8% 35%;
+}
+
+@media screen and (max-width: 450px) {
+  .create-account-logo{
+    width: 20%;
+    margin: 15% 40% 15% 40%;
+  }
+}
+@media screen and (max-width: 320px) {
+  .create-account-logo{
+    width: 20%;
+    margin: 5% 40% 5% 40%;
+  }
+}
