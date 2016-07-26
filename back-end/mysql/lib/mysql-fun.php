@@ -74,11 +74,4 @@
 			return $return ;
 		}
 	}
-	function change_time_type($data){
-		//本函数用于将时间戳转化为时间
-		$query="select FROM_UNIXTIME($data)";
-		$data1=mysql_query($query);
-		$data2=mysql_fetch_array($data1,MYSQL_NUM);
-		return $data2;
-	}
 ?>
