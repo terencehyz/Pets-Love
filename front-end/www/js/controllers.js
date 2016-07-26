@@ -10,12 +10,17 @@ angular.module('starter.controllers', [])
 
 /*以下为注册页面的ctrl*/
 
-.controller('CreateAccountCtrl',function ($scope) {
+.controller('CreateAccountCtrl',function ($scope,$state) {
   $scope.createemail='';
   $scope.createpwd1='';
   $scope.createpwd2='';
   $scope.createerror=false;
   $scope.incomplete=true;
+  
+  $scope.turn=function () {
+    $state.go('login');
+  }
+  
   $scope.$watch('createemail',function () {
     $scope.test();
   });
