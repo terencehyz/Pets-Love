@@ -4,11 +4,11 @@
 	//require_once('login.php');
 	//message_array为前端传来的数据，此处取值为测试数据
 	$message_array=array(
-		'h_name'=>'张泰银',
-		'h_sex'=>'男',
-		'h_call'=>'123456789',
-		'h_location'=>'呼和浩特市',
-		'h_account'=>'zty',
+		'h_name'=>'',
+		'h_sex'=>'',
+		'h_call'=>'',
+		'h_location'=>'',
+		'h_account'=>'saq',
 		'h_password'=>'123',
 		'h_email'=>'zhangtaiyin@imudges.com'
 		);
