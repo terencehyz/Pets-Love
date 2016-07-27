@@ -1,3 +1,22 @@
 <ion-view>
-this is login
+  <ion-content ng-controller="LoginCtrl">
+    <img src="img/ionic.png" alt="logo" class="create-account-logo">
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">邮箱</span>
+        <input type="email" placeholder="邮箱" ng-model="loginemail">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">密码</span>
+        <input type="password" placeholder="密码" ng-model="loginpwd">
+      </label>
+      <p class="create-account-p" ng-hide="loginvalid">密码或用户名错误 请重新输入</p>
+      <div >
+        <button class="button button-full button-positive" ng-click="servervalid()">登陆</button>
+      </div>
+    </div>
+    <button class="button button-full button-positive button-small" ng-hide="" ng-click="turncreate()">
+      没有账号？ 注册
+    </button>
+  </ion-content>
 </ion-view>

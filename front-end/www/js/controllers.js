@@ -8,14 +8,45 @@ angular.module('starter.controllers', [])
   })
 })
 
-/*以下为注册页面的ctrl*/
+.controller('LoginCtrl',function ($scope,$state) {
+  $scope.loginmail='';
+  $scope.loginpwd='';
+  $scope.loginvalid=true;
+  $scope.servervalid=function () {
+    /*此处向服务器验证账号密码是否匹配*/
+    if($scope.loginvalid){
+      $state.go('tab.dash');
+    }
+    else{
+      loginvalid=false;
+    }
+  };
+  $scope.turncreate=function () {
+    $state.go('create-account')
+  }
+})
 
-.controller('CreateAccountCtrl',function ($scope) {
+/*以下为注册页面的ctrl*/
+.controller('CreateAccountCtrl',function ($scope,$state) {
+  $scope.createnickname='';
   $scope.createemail='';
   $scope.createpwd1='';
   $scope.createpwd2='';
+  $scope.namevaild=true;
+  $scope.emailvaild=true;
   $scope.createerror=false;
   $scope.incomplete=true;
+
+  $scope.turnlogin=function () {
+    $state.go('login');
+  };
+  $scope.turndash=function () {
+    $state.go('tab.dash');
+  };
+
+  $scope.$watch('createnickname',function () {
+    $scope.test();
+  });
   $scope.$watch('createemail',function () {
     $scope.test();
   });
@@ -33,7 +64,7 @@ angular.module('starter.controllers', [])
       $scope.createerror=true;
     }
 
-    if(!$scope.createemail.length||!$scope.createpwd1.length||!$scope.createpwd2.length){
+    if(!$scope.createemail.length||!$scope.createpwd1.length||!$scope.createpwd2.length||!$scope.createnickname.length){
       $scope.incomplete=true;
     }
     else{

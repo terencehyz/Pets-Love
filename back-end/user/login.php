@@ -1,6 +1,6 @@
 <?php
 	require_once('../mysql/connect.php');
-	require_once('../mysql/lib/mysql-fun.php');
+	include_once('../mysql/lib/mysql-fun.php');
 	require_once('../lib/secret-key-fun.php');
 	//$array前端传输来的数据，此处为测试数据
 	//$array = json_decode($json,true);

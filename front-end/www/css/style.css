@@ -7,6 +7,10 @@
   margin: 8% 35% 8% 35%;
 }
 
+.tetxwarn{
+  color: red;
+}
+
 @media screen and (max-width: 450px) {
   .create-account-logo{
     width: 20%;
