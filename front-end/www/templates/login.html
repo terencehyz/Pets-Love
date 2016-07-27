@@ -1,26 +1,21 @@
 <ion-view>
-  <ion-content ng-controller="CreateAccountCtrl">
+  <ion-content ng-controller="LoginCtrl">
     <img src="img/ionic.png" alt="logo" class="create-account-logo">
     <div class="list">
       <label class="item item-input item-floating-label">
-        <span class="input-label">Email</span>
-        <input type="email" placeholder="Email" ng-model="createemail">
+        <span class="input-label">邮箱</span>
+        <input type="email" placeholder="邮箱" ng-model="loginemail">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Password</span>
-        <input type="password" placeholder="Password" ng-model="createpwd1">
+        <span class="input-label">密码</span>
+        <input type="password" placeholder="密码" ng-model="loginpwd">
       </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Password Again</span>
-        <input type="password" placeholder="Password Again" ng-model="createpwd2">
-      </label>
+      <p class="create-account-p" ng-hide="loginvalid">密码或用户名错误 请重新输入</p>
       <div >
-        <p class="create-account-p" ng-show="false">密码两次输入不相同</p>
-        <button class="button button-full button-positive" ng-disabled="createerror|| incomplete" ng-click="">Submit</button>
+        <button class="button button-full button-positive" ng-click="servervalid()">登陆</button>
       </div>
     </div>
-    <p class="create-account-p">注册即表明你同意Pets'Love的条款和隐私权政策.</p>
-    <button class="button button-full button-positive" ng-hide="!(createerror|| incomplete)" ng-click="turn()">
+    <button class="button button-full button-positive button-small" ng-hide="" ng-click="turncreate()">
       没有账号？ 注册
     </button>
   </ion-content>
