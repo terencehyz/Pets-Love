@@ -14,6 +14,7 @@
 		}
 	}
 	function update($table_name,$row_name,$row_value,$key_row,$key_value){
+		//update one message
 		$sql="update $table_name set $row_name = '$row_value' where $key_row='$key_value'";
 		if(mysql_query($sql)){
 			$return =1;
@@ -61,7 +62,6 @@
 		$query="select FROM_UNIXTIME($time)";
 		$data1=mysql_query($query);
 		$data2=mysql_fetch_array($data1,MYSQL_NUM);
-		print_r($data2);
 		$register_time=$data2[0];
 		$sql="insert into host (h_name,h_sex,h_call,h_location,h_account,h_password,h_email,h_register_time) 
 			values('$array[0]','$array[1]','$array[2]','$array[3]','$array[4]','$array[5]','$array[6]','$register_time')";
@@ -73,12 +73,5 @@
 			$return =0;
 			return $return ;
 		}
-	}
-	function change_time_type($data){
-		//本函数用于将时间戳转化为时间
-		$query="select FROM_UNIXTIME($data)";
-		$data1=mysql_query($query);
-		$data2=mysql_fetch_array($data1,MYSQL_NUM);
-		return $data2;
 	}
 ?>
