@@ -11,6 +11,9 @@
 	if($user_array['h_account']==$array['h_account']&&$user_array['h_password']==$array['h_password']){
 		$hash=random(10,'123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ');
 		$hash=md5(md5($hash));
+		$secret_password=md5($array['h_password']);
+		echo $secret_password;
+		update("host","h_password_md5","$secret_password","h_account","yy");
 		if(update('host',"h_secret_key","$hash","h_account","yy")){//此处的yy为测试数据，后期需要修改
 			echo "密钥更新成功！";
 		}

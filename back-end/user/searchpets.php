@@ -3,8 +3,8 @@
 	require_once('../mysql/connect.php');
 	//array_message 为前端传输来的数据
 	$array_message=array(
-		'p_sex'=>'雄性',
-		'p_type'=>'金毛',
+		'p_sex'=>'雌性',
+		'p_type'=>'',
 		'p_age'=>'',
 		'h_location'=>''
 		);
@@ -17,12 +17,14 @@
 		print_r($pets_message);
 		//将$pets_message的信息传给前端
 	}
-	else{
+	else {
 		//如果用户未填写location信息
-		$sql="select * from pet where $array_message = ";
+		$sql="select * from pet where p_sex ='$array_message[p_sex]' or p_age='$array_message' or p_age='$array_message[age]'";
 		$query=mysql_query($sql);
-		$return=mysql_fetch_array($query,MYSQL_ASSOC);
-
+		while ($str = mysql_fetch_assoc($query)) {
+			$pets_message[]=$str;
+		}
+		//$pets_message是二维数组，访问示例$pets_message[0]['p_name'];
 	}	
 
 ?>
