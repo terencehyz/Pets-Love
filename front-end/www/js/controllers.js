@@ -8,6 +8,20 @@ angular.module('starter.controllers', [])
   })
 })
 
+.controller('ForgetPwdCtrl',function ($scope,$state) {
+  $scope.newpwd1="";
+  $scope.newpwd2="";
+  $scope.reemail="";
+  $scope.recode="";
+  $scope.resuccess=false;
+  $scope.turnlogin=function () {
+    $state.go('login')
+  }
+  $scope.step1=function () {
+    $state.go('forget-password.code')
+  };
+})
+
 .controller('LoginCtrl',function ($scope,$state) {
   $scope.loginmail='';
   $scope.loginpwd='';
@@ -23,7 +37,11 @@ angular.module('starter.controllers', [])
   };
   $scope.turncreate=function () {
     $state.go('create-account')
-  }
+  };
+
+  $scope.turnforget=function () {
+    $state.go('forget-password.email')
+  };
 })
 
 /*以下为注册页面的ctrl*/
@@ -35,7 +53,7 @@ angular.module('starter.controllers', [])
   $scope.namevaild=true;
   $scope.emailvaild=true;
   $scope.createerror=false;
-  $scope.incomplete=true;
+  $scope.incomplete=false;
 
   $scope.turnlogin=function () {
     $state.go('login');

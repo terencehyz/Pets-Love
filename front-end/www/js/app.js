@@ -1,11 +1,10 @@
 // Ionic Starter App
-
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','starter.filters'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -22,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   });
 })
-
+//路由
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
@@ -42,6 +41,41 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       controller: 'CreateAccountCtrl'
     })
 
+    .state('forget-password',{
+      url:'/forget-password',
+      templateUrl:'templates/ForgetPassword.html',
+      controller: 'ForgetPwdCtrl'
+    })
+
+    .state('forget-password.email',{
+      url:'/forget-password-email',
+      views:{
+        'forget-password-email':{
+          templateUrl:'templates/ForgetPassword-email.html',
+          controller:'ForgetPwdCtrl'
+        }
+      }
+    })
+
+    .state('forget-password.code',{
+      url:'/forget-password-code',
+      views:{
+        'forget-password-code':{
+          templateUrl:'templates/ForgetPassword-code.html',
+          controller:'ForgetPwdCtrl'
+        }
+      }
+    })
+
+    .state('forget-password.re',{
+      url:'/forget-password-re',
+      views:{
+        'forget-password-re':{
+          templateUrl:'templates/ForgetPassword-re.html',
+          controller:'ForgetPwdCtrl'
+        }
+      }
+    })
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',

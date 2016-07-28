@@ -1,5 +1,5 @@
-<ion-view>
-  <ion-content ng-controller="CreateAccountCtrl">
+<ion-view ng-controller="CreateAccountCtrl">
+  <ion-content>
     <img src="img/ionic.png" alt="logo" class="create-account-logo">
     <div class="list">
       <label class="item item-input item-floating-label">
@@ -20,12 +20,14 @@
       </label>
       <div >
         <p class="create-account-p" ng-show="false">密码两次输入不相同</p>
-        <button class="button button-full button-positive" ng-disabled="createerror|| incomplete" ng-click="turndash()">注册</button>
       </div>
     </div>
+    <div class="row padding-top">
+      <button class="button button-outline button-positive col col-80 col-offset-10 button-small" ng-click="turndash()" ng-disabled="createerror||incomplete">注册</button>
+    </div>
     <p class="create-account-p">注册即表明你同意Pets'Love的条款和隐私权政策.</p>
-    <button class="button button-full button-positive button-small" ng-hide="!(createerror|| incomplete)" ng-click="turnlogin()">
-      已有账号？ 登陆
-    </button>
+    <div class="row">
+      <button class="button button-clear button-positive col-offset-33 col-33" ng-click="turnlogin()">登陆账号</button>
+    </div>
   </ion-content>
 </ion-view>

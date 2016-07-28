@@ -1,5 +1,5 @@
-<ion-view>
-  <ion-content ng-controller="LoginCtrl">
+<ion-view ng-controller="LoginCtrl">
+  <ion-content>
     <img src="img/ionic.png" alt="logo" class="create-account-logo">
     <div class="list">
       <label class="item item-input item-floating-label">
@@ -11,12 +11,14 @@
         <input type="password" placeholder="密码" ng-model="loginpwd">
       </label>
       <p class="create-account-p" ng-hide="loginvalid">密码或用户名错误 请重新输入</p>
-      <div >
-        <button class="button button-full button-positive" ng-click="servervalid()">登陆</button>
-      </div>
     </div>
-    <button class="button button-full button-positive button-small" ng-hide="" ng-click="turncreate()">
-      没有账号？ 注册
-    </button>
+
+    <div class="row padding-bottom">
+      <button class="button button-outline button-positive col col-80 col-offset-10 button-small" ng-click="servervalid()">登陆我的账户</button>
+    </div>
+    <div class="row padding-top">
+      <button class="button button-clear button-positive col-offset-10 col-33" ng-click="turncreate()">快速注册</button>
+      <button class="button button-clear button-positive col-offset-10 col-33" ng-click="turnforget()">忘记密码</button>
+    </div>
   </ion-content>
-</ion-view>
+  </ion-view>
