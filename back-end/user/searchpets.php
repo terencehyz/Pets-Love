@@ -1,4 +1,5 @@
 <?php 
+	//本文件向前端返回一个二维数组，因为搜索结果可能为多个宠物的所有信息
 	include_once('../mysql/lib/mysql-fun.php');
 	require_once('../mysql/connect.php');
 	//array_message 为前端传输来的数据
@@ -14,7 +15,8 @@
 		$h_id=$h_message['id'];
 		echo $h_id;
 		$pets_message=query('pet','host_id',$h_id);
-		print_r($pets_message);
+		$json=json_encode($pets_message);
+		echo $json;
 		//将$pets_message的信息传给前端
 	}
 	else {
@@ -24,6 +26,8 @@
 		while ($str = mysql_fetch_assoc($query)) {
 			$pets_message[]=$str;
 		}
+		$json=json_encode($pets_message);
+		echo $json;
 		//$pets_message是二维数组，访问示例$pets_message[0]['p_name'];
 	}	
 

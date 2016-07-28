@@ -74,4 +74,24 @@
 			return $return ;
 		}
 	}
+	function insert_register($user_array){
+		$time=time();
+		//将时间戳转化为mysql时间格式
+		$query="select FROM_UNIXTIME($time)";
+		$data1=mysql_query($query);
+		$data2=mysql_fetch_array($data1,MYSQL_NUM);
+		$register_time=$data2[0];
+		foreach($user_array as $value){
+			$array[]=$value;
+		}
+		$sql="insert into host (h_account,h_password,h_register_time) values('$array[0]','$array[1]','$data2[0]')";
+		if(mysql_query($sql)){
+			$return =1;
+			return $return ;
+		}
+		else{
+			$return =0;
+			return $return ;
+		}
+	}
 ?>
