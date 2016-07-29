@@ -6,6 +6,7 @@
 	include_once('../mysql/connect.php');
 	include_once('../lib/json-fun.php');
 	include_once('../mysql/lib/mysql-fun.php');
+	//此处的$pet_id后期需要修改
 	$pet_id="14";
 	$pet_message=query('pet','id',$pet_id);
 	$host_id=$pet_message['host_id'];
