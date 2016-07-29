@@ -2,7 +2,7 @@
   //本文件用于上传照片、修改照片
 	include_once('../mysql/connect.php');
 	include_once('../mysql/lib/mysql-fun.php');
-	$secret_key="4d4261824afa7a6962e55c7b4ebf6c0f";
+	$secret_key="b51e1ab9a3b6a5b4198232d5f1169e20";
   	$uploaddir = "./img/";//设置文件保存目录 注意包含/  
   	$type=array("jpg","gif","bmp","jpeg","png");//设置允许上传文件的类型
   	$patch="http://127.0.0.1/pets-love/back-end/user/";//程序所在路径
@@ -51,8 +51,8 @@
         	}
    			while(file_exists($uploadfile));
    			//在于前端完成传递之后需要修改此处！！！
-   			$h_secret_key="4d4261824afa7a6962e55c7b4ebf6c0f";
-   			update('host','h_photo',$name,'h_secret_key',$h_secret_key);
+   			$h_secret_key="b51e1ab9a3b6a5b4198232d5f1169e20";
+   			update('host','h_photo',$uploadfile,'h_secret_key',$h_secret_key);
         	if(move_uploaded_file($_FILES['file']['tmp_name'],$uploadfile)){
 
             	if(!is_uploaded_file($_FILES['file']['tmp_name'])){

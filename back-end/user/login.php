@@ -27,9 +27,12 @@
 		else{
 			echo "密钥更新失败！";
 		}
-		//登录成功向前端返回h_secret_key 和judge信息
-		$return ['h_secret_key']=$hash;
+		$user_message=query('host','h_email',$array['h_email']);
+		//登录成功向前端返回h_secret_key judge和本人头像位置信息信息
+		
 		$return ['judge']=1;
+		$return ['h_secret_key']=$hash;
+		$return ['h_photo']=$user_message['h_photo'];
 		$json= json_encode($return);
 		echo $json;
  	}

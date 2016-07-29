@@ -84,7 +84,7 @@
 		foreach($user_array as $value){
 			$array[]=$value;
 		}
-		$sql="insert into host (h_account,h_password,h_register_time) values('$array[0]','$array[1]','$data2[0]')";
+		$sql="insert into host (h_email,h_password,h_register_time) values('$array[0]','$array[1]','$data2[0]')";
 		if(mysql_query($sql)){
 			$return =1;
 			return $return ;
