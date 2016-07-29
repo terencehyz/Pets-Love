@@ -22,25 +22,49 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
   });
 })
 //路由
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  //将Android的Tab置于底部开始
+  $ionicConfigProvider.platform.ios.tabs.style('standard');
+  $ionicConfigProvider.platform.ios.tabs.position('bottom');
+  $ionicConfigProvider.platform.android.tabs.style('standard');
+  $ionicConfigProvider.platform.android.tabs.position('bottom');
+
+  $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
+  $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+
+  $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
+  $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');
+
+  $ionicConfigProvider.platform.ios.views.transition('ios');
+  $ionicConfigProvider.platform.android.views.transition('android');
+  //将Android的Tab置于底部结束
+
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-
+    /*登陆*/
     .state('login',{
       url:'/login',
       templateUrl:'templates/login.html'
     })
-
+    /*注册*/
     .state('create-account',{
       url:'/create-account',
       templateUrl:'templates/create-account.html',
       controller: 'CreateAccountCtrl'
     })
 
+    /*关于我们*/
+    .state('aboutus',{
+      url:'/aboutus',
+      templateUrl:'templates/aboutus.html',
+      controller: 'AboutUsCtrl'
+    })
+
+    /*忘记密码*/
     .state('forget-password',{
       url:'/forget-password',
       templateUrl:'templates/ForgetPassword.html',
@@ -52,7 +76,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       views:{
         'forget-password-email':{
           templateUrl:'templates/ForgetPassword-email.html',
-          controller:'ForgetPwdCtrl'
+          controller:'forget1'
         }
       }
     })
@@ -62,7 +86,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       views:{
         'forget-password-code':{
           templateUrl:'templates/ForgetPassword-code.html',
-          controller:'ForgetPwdCtrl'
+          controller:'forget2'
         }
       }
     })
@@ -72,7 +96,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       views:{
         'forget-password-re':{
           templateUrl:'templates/ForgetPassword-re.html',
-          controller:'ForgetPwdCtrl'
+          controller:'forget3'
         }
       }
     })

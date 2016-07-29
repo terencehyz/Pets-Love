@@ -1,4 +1,21 @@
 /* Empty. Add your own CSS if you like */
+.aboutus-logo{
+  width: 20%;
+  margin: 15% 40% 8% 40%
+}
+.aboutus-p{
+  text-align: center;
+}
+.aboutus-rights{
+  margin-top: 15%;
+}
+.aboutus-rights a{
+  text-decoration: none;
+  padding-bottom: 2%;
+}
+
+
+
 .create-account-p{
   text-align: center;
 }

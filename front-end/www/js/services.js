@@ -1,5 +1,16 @@
 angular.module('starter.services', [])
 
+.factory('NewPassword',function () {
+  return {
+    text : {
+    password:"",
+    password1:"",
+    password2:"",
+    mail:"",
+    code:""}
+  };
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

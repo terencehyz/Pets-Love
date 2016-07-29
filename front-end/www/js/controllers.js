@@ -1,25 +1,46 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
-  $scope.a='';
-  $scope.b='';
-  $scope.c=0;
-  $.post("login.php",{id:$scope.a,pwd:$scope.b},function(){
-  })
+
+})
+  
+.controller('forget1',function($scope,$state,NewPassword){
+  $scope.reemail={
+    mail:""
+  };
+  $scope.step1=function () {
+    NewPassword.email=$scope.reemail.mail;
+    $state.go('forget-password.code');
+    console.log(NewPassword)
+  }
 })
 
-.controller('ForgetPwdCtrl',function ($scope,$state) {
-  $scope.newpwd1="";
-  $scope.newpwd2="";
-  $scope.reemail="";
+.controller('forget2',function($scope,$state,NewPassword){
   $scope.recode="";
-  $scope.resuccess=false;
-  $scope.turnlogin=function () {
-    $state.go('login')
-  }
-  $scope.step1=function () {
-    $state.go('forget-password.code')
+  $scope.step2=function () {
+    NewPassword.code=$scope.recode;
+    $state.go('forget-password.re');
+    console.log(NewPassword)
   };
+})
+
+.controller('forget3',function($scope,$state,NewPassword){
+  $scope.resuccess=false;
+  $scope.pass={
+    pass1:"",
+    pass2:""
+  };
+  $scope.step3=function () {
+    NewPassword.password1=$scope.pass.pass1;
+    NewPassword.password2=$scope.pass.pass2;
+    NewPassword.password=$scope.pass.pass2;
+    $state.go('login');
+    console.log(NewPassword)
+  };
+})
+
+.controller('ForgetPwdCtrl',function ($scope,$state,NewPassword) {
+    console.log("lalala")
 })
 
 .controller('LoginCtrl',function ($scope,$state) {
