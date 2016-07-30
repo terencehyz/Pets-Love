@@ -1,28 +1,29 @@
 <ion-view view-title="关于">
-  <ion-nav-bar class="bar-dark">
-    <ion-nav-back-button>
-    </ion-nav-back-button>
-  </ion-nav-bar>
   <ion-content>
     <img src="img/ionic.png" class="aboutus-logo">
-    <p class="aboutus-p">Pets' Love V1.0.0</p>
+    <p class="aboutus-p">Pets' Love V0.0.1</p>
 
     <ion-list>
 
-      <a class="item item-icon-right" href="#">
+      <a class="item item-icon-right" onclick="window.open('http://www.baidu.com', '_blank', 'location=yes')">
         官方网站
         <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-right" href="#">
+      <a class="item item-icon-right" onclick="window.open('http://www.itunes.com', '_blank', 'location=yes')">
         给我评价
         <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-right" href="#">
+
+      <ion-item ng-click="feedback()">
         问题反馈
-        <i class="icon ion-ios-arrow-right"></i>
-      </a>
+        <span class="item-note">
+          Email:v@ionichina.com
+        </span>
+      </ion-item>
+
+
     </ion-list>
     <div class="aboutus-p aboutus-rights">
       <a href="#" >Pets' Love服务协议及软件许可</a>

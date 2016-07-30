@@ -10,7 +10,42 @@ angular.module('starter.services', [])
     code:""}
   };
 })
+  
+.factory('myFollowing',function(){
+  // Might use a resource here that returns a JSON array
 
+  // Some fake testing data
+  var following = [{
+    mail:'test12@qq.com',
+    account: '12efw',
+    face: 'img/ben.png'
+  }, {
+    mail:'test34@qq.com',
+    account: '34few',
+    face: 'img/max.png'
+  }, {
+    mail:'test56@qq.com',
+    account: '56fe',
+    face: 'img/adam.jpg'
+  }, {
+    mail:'test78@qq.com',
+    account: '78ww',
+    face: 'img/perry.png'
+  }, {
+    mail:'test9@qq.com',
+    account: '9lll',
+    face: 'img/mike.png'
+  }];
+  return{
+    all:function () {
+      return following;
+    },
+    remove:function () {
+      
+    }
+  }
+}) 
+  
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

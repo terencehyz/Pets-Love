@@ -6,6 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','starter.filters'])
 
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -28,17 +29,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
   $ionicConfigProvider.platform.ios.tabs.position('bottom');
   $ionicConfigProvider.platform.android.tabs.style('standard');
   $ionicConfigProvider.platform.android.tabs.position('bottom');
-
   $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
   $ionicConfigProvider.platform.android.navBar.alignTitle('center');
-
   $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
   $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');
-
   $ionicConfigProvider.platform.ios.views.transition('ios');
   $ionicConfigProvider.platform.android.views.transition('android');
   //将Android的Tab置于底部结束
-
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -46,10 +43,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
   // Each state's controller can be found in controllers.js
   $stateProvider
     /*登陆*/
-    .state('login',{
+  .state('login',{
       url:'/login',
-      templateUrl:'templates/login.html'
+      templateUrl:'templates/login.html',
+      controller:'LoginCtrl'
     })
+
+
     /*注册*/
     .state('create-account',{
       url:'/create-account',
@@ -58,11 +58,71 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
     })
 
     /*关于我们*/
-    .state('aboutus',{
-      url:'/aboutus',
-      templateUrl:'templates/aboutus.html',
-      controller: 'AboutUsCtrl'
+    .state('tab.aboutus', {
+      url: '/account/:aboutus',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/aboutus.html',
+          controller: 'aboutUsCtrl'
+        }
+      }
     })
+
+
+    /*粉丝*/
+    .state('tab.myFollower', {
+      url: '/account/:myFollower',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/myFollower.html',
+          controller: 'myFollowerCtrl'
+        }
+      }
+    })
+
+     /*关注*/
+
+    .state('tab.myFollowing', {
+      url: '/account/:myFollowing',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/myFollowing.html',
+          controller: 'myFollowingCtrl'
+        }
+      }
+    })
+
+
+
+     /*宠物*/
+    .state('tab.mypet', {
+      url: '/account/:mypet',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/mypet.html',
+          controller: 'myPetCtrl'
+        }
+      }
+    })
+
+    /*宠物详情*/
+    .state('myPetDetail',{
+      url:'/myPetDetail',
+      templateUrl:'templates/mypetdetail.html',
+      controller: 'myPetDetailCtrl'
+    })
+
+    /*设置*/
+    .state('tab.mysettings', {
+      url: '/account/:mysettings',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/mysettings.html',
+          controller: 'MySettingsCtrl'
+        }
+      }
+    })
+
 
     /*忘记密码*/
     .state('forget-password',{
@@ -159,6 +219,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
    })
 
   .state('tab.account', {
+    cache: false,
     url: '/account',
     views: {
       'tab-account': {
@@ -168,8 +229,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
     }
   });
 
-  // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/tab/dash');
-  $urlRouterProvider.otherwise('/create-account');
+  $urlRouterProvider.otherwise('/login');
 
 });

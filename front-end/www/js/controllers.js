@@ -1,9 +1,9 @@
 angular.module('starter.controllers', [])
-
+/*主页*/
 .controller('DashCtrl', function($scope) {
 
 })
-  
+/*忘记密码1-3*/
 .controller('forget1',function($scope,$state,NewPassword){
   $scope.reemail={
     mail:""
@@ -14,7 +14,6 @@ angular.module('starter.controllers', [])
     console.log(NewPassword)
   }
 })
-
 .controller('forget2',function($scope,$state,NewPassword){
   $scope.recode="";
   $scope.step2=function () {
@@ -23,7 +22,6 @@ angular.module('starter.controllers', [])
     console.log(NewPassword)
   };
 })
-
 .controller('forget3',function($scope,$state,NewPassword){
   $scope.resuccess=false;
   $scope.pass={
@@ -38,11 +36,9 @@ angular.module('starter.controllers', [])
     console.log(NewPassword)
   };
 })
-
 .controller('ForgetPwdCtrl',function ($scope,$state,NewPassword) {
-    console.log("lalala")
 })
-
+/*登陆*/
 .controller('LoginCtrl',function ($scope,$state) {
   $scope.loginmail='';
   $scope.loginpwd='';
@@ -64,8 +60,7 @@ angular.module('starter.controllers', [])
     $state.go('forget-password.email')
   };
 })
-
-/*以下为注册页面的ctrl*/
+/*注册*/
 .controller('CreateAccountCtrl',function ($scope,$state) {
   $scope.createnickname='';
   $scope.createemail='';
@@ -111,7 +106,7 @@ angular.module('starter.controllers', [])
     }
   };
 })
-
+/*聊天*/
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -126,7 +121,7 @@ angular.module('starter.controllers', [])
     Chats.remove(chat);
   };
 })
-
+/*聊天详细*/
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
@@ -138,9 +133,33 @@ angular.module('starter.controllers', [])
 .controller('ReleaseCtrl',function ($scope) {
 
 })
-
+/*账户*/
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
+})
+/*设置*/
+.controller('MySettingsCtrl',function ($scope) {
+
+})
+/*关注的人*/
+.controller('myFollowingCtrl',function ($scope) {
+
+})
+/*我的粉丝*/
+.controller('myFollowerCtrl',function ($scope) {
+
+})
+/*关于我们*/
+.controller('aboutUsCtrl',function ($scope) {
+
+})
+/*我的宠物*/
+.controller('myPetCtrl',function ($scope) {
+
+})
+/*我的宠物详情*/
+.controller('myPetDetailCtrl',function ($scope) {
+
 });
