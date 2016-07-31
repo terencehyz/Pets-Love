@@ -49,7 +49,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       controller:'LoginCtrl'
     })
 
-
     /*注册*/
     .state('create-account',{
       url:'/create-account',
@@ -57,9 +56,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       controller: 'CreateAccountCtrl'
     })
 
+
+    /*用户资料*/
+    .state('tab.userProfile', {
+      url: '/account/userProfile',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/userProfile.html',
+          controller: 'userProfileCtrl'
+        }
+      }
+    }) 
+      
+      
+      
     /*关于我们*/
     .state('tab.aboutus', {
-      url: '/account/:aboutus',
+      url: '/account/aboutus',
       views: {
         'tab-account': {
           templateUrl: 'templates/aboutus.html',
@@ -71,7 +84,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
 
     /*粉丝*/
     .state('tab.myFollower', {
-      url: '/account/:myFollower',
+      url: '/account/myFollower',
       views: {
         'tab-account': {
           templateUrl: 'templates/myFollower.html',
@@ -83,7 +96,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
      /*关注*/
 
     .state('tab.myFollowing', {
-      url: '/account/:myFollowing',
+      url: '/account/myFollowing',
       views: {
         'tab-account': {
           templateUrl: 'templates/myFollowing.html',
@@ -96,7 +109,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
 
      /*宠物*/
     .state('tab.mypet', {
-      url: '/account/:mypet',
+      url: '/account/mypet',
       views: {
         'tab-account': {
           templateUrl: 'templates/mypet.html',
@@ -114,7 +127,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
 
     /*设置*/
     .state('tab.mysettings', {
-      url: '/account/:mysettings',
+      url: '/account/mysettings',
       views: {
         'tab-account': {
           templateUrl: 'templates/mysettings.html',

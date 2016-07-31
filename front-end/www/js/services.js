@@ -2,15 +2,37 @@ angular.module('starter.services', [])
 
 .factory('NewPassword',function () {
   return {
-    text : {
-    password:"",
-    password1:"",
-    password2:"",
-    mail:"",
-    code:""}
+    lose: {
+      password:"",
+      password1:"",
+      password2:"",
+      mail:"",
+      code:""}
   };
 })
-  
+
+.factory('userDetailInformation',function () {
+  var dataUser = {
+    id:"tom",
+    email:"78944562@qq.com",
+    phone:"13327896654",
+    password:"123456789",
+    photo:"img/tom.JPG",
+    secretKey:"1234567890",
+    pets:"",
+    location:{
+      x:"",
+      y:""
+    },
+    bio:"此家伙很懒什么都没留下。"
+  }
+  return{
+    pluser:function () {
+      return dataUser;
+    }
+  };
+})
+
 .factory('myFollowing',function(){
   // Might use a resource here that returns a JSON array
 
@@ -41,11 +63,11 @@ angular.module('starter.services', [])
       return following;
     },
     remove:function () {
-      
+
     }
   }
-}) 
-  
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

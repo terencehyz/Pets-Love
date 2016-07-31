@@ -5,21 +5,19 @@ angular.module('starter.controllers', [])
 })
 /*忘记密码1-3*/
 .controller('forget1',function($scope,$state,NewPassword){
-  $scope.reemail={
-    mail:""
-  };
+  $scope.youxiang="";
   $scope.step1=function () {
-    NewPassword.email=$scope.reemail.mail;
+    NewPassword.lose.mail=$scope.youxiang;
     $state.go('forget-password.code');
-    console.log(NewPassword)
+    console.log(NewPassword.lose)
   }
 })
 .controller('forget2',function($scope,$state,NewPassword){
   $scope.recode="";
   $scope.step2=function () {
-    NewPassword.code=$scope.recode;
+    NewPassword.lose.code=$scope.recode;
     $state.go('forget-password.re');
-    console.log(NewPassword)
+    console.log(NewPassword.lose)
   };
 })
 .controller('forget3',function($scope,$state,NewPassword){
@@ -29,11 +27,11 @@ angular.module('starter.controllers', [])
     pass2:""
   };
   $scope.step3=function () {
-    NewPassword.password1=$scope.pass.pass1;
-    NewPassword.password2=$scope.pass.pass2;
-    NewPassword.password=$scope.pass.pass2;
+    NewPassword.lose.password1=$scope.pass.pass1;
+    NewPassword.lose.password2=$scope.pass.pass2;
+    NewPassword.lose.password=$scope.pass.pass2;
     $state.go('login');
-    console.log(NewPassword)
+    console.log(NewPassword.lose)
   };
 })
 .controller('ForgetPwdCtrl',function ($scope,$state,NewPassword) {
@@ -162,4 +160,9 @@ angular.module('starter.controllers', [])
 /*我的宠物详情*/
 .controller('myPetDetailCtrl',function ($scope) {
 
+})
+/*用户详情*/
+.controller('userProfileCtrl',function ($scope,userDetailInformation) {
+  $scope.userInfo = userDetailInformation.pluser();
+  console.log(JSON.stringify(userDetailInformation.pluser()))
 });
