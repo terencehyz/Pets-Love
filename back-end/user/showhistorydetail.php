@@ -15,4 +15,5 @@
 	$message['pet']=$pet_message;
 	$json=ch_json_encode($message);
 	echo $json;
+	mysql_close($con);
 ?>

@@ -18,7 +18,7 @@
 	$judge=0;;
 	//如果有重复的信息 将$judge置为1；
 	for($i=0;$i<$length;$i++){
-		if(array_intersect($all_pets[$i], $new)==$new){
+		if(array_intersect($all_pets[$i], $new)==$new){//交集判断函数，判断$new与$all_pets($i)是否有交集，而且交集是否等于$new
 			$index=$i;
 			$judge=1;
 		}
@@ -27,7 +27,9 @@
 	if($judge==0){
 		$sql="insert into pet (p_name,p_sex,p_type,p_age,host_id,p_about,p_detail_type) values ('$new[p_name]','$new[p_sex]','$new[p_type]','$new[p_age]','$new[host_id]','$new[p_about]','$new[p_detail_type]')";
 		if(mysql_query($sql)){
-		//////////////////////////////////////$json_encode(value)
+			$return =1;
+			$json=json_encode($return);
+			echo $json;
 		}
 		else{
 			$return =0;
@@ -35,9 +37,11 @@
 			echo $json;
 		}
 	}
+	//如果有重复信息的话
 	else {
 		$return=0;
 		$json=json_encode($return);
 		echo $json;
 	}
+	mysql_close($con);
 ?>

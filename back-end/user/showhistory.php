@@ -34,5 +34,5 @@
 
 	$json=ch_json_encode($EX_lover);
 	echo $json;
-	
+	mysql_close($con);
 ?>

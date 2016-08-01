@@ -66,4 +66,5 @@
               	}
         	}
    		}
+      mysql_close($con);
 ?>

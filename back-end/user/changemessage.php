@@ -23,4 +23,5 @@
 		$json=json_encode($return);
 		echo $json;
 	}
+	mysql_close($con);
 ?>

@@ -4,5 +4,5 @@
 		$sql = mysql_query("select id from host where h_secret_key = '$s'");
 		$hid = mysql_fetch_array($sql);
 		return $hid['id'];
-
+		mysql_close($con);
 ?>

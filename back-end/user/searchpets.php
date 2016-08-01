@@ -30,5 +30,5 @@
 		echo $json;
 		//$pets_message是二维数组，访问示例$pets_message[0]['p_name'];
 	}	
-
+	mysql_close($con);
 ?>

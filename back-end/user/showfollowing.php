@@ -15,4 +15,5 @@
 	}
 	$b = ch_json_encode($message);
 	echo ($b);
+	mysql_close($con);
 ?>
