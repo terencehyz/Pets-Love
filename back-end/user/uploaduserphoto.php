@@ -2,7 +2,13 @@
   //本文件用于上传照片、修改照片
 	include_once('../mysql/connect.php');
 	include_once('../mysql/lib/mysql-fun.php');
-	$secret_key="b51e1ab9a3b6a5b4198232d5f1169e20";
+	//上传至云所需要
+	use Qiniu\Auth;
+	use Qiniu\Processing\PersistentFop;
+	use Qiniu\Storage\UploadManager;
+					
+	//secret_key 为前端传回来的数据
+	$h_secret_key="177c68686fe785db4fc2982bfbe7f3a7";
   	$uploaddir = "./img/";//设置文件保存目录 注意包含/  
   	$type=array("jpg","gif","bmp","jpeg","png");//设置允许上传文件的类型
   	$patch="http://127.0.0.1/pets-love/back-end/user/";//程序所在路径
@@ -50,20 +56,28 @@
             	$uploadfile=$uploaddir.$name;
         	}
    			while(file_exists($uploadfile));
-   			//在于前端完成传递之后需要修改此处！！！
-   			$h_secret_key="b51e1ab9a3b6a5b4198232d5f1169e20";
-   			update('host','h_photo',$uploadfile,'h_secret_key',$h_secret_key);
         	if(move_uploaded_file($_FILES['file']['tmp_name'],$uploadfile)){
 
             	if(!is_uploaded_file($_FILES['file']['tmp_name'])){
-            	//输出图片预览，后期需要删除
-                	echo "<center>您的文件已经上传完毕 上传图片预览: </center><br><center><img src='$uploadfile'></center>";
-                	echo"<br><center><a href='javascrīpt:history.go(-1)'>继续上传</a></center>";
+            		//如果上传服务器成功，执行从服务器上传至云储存
+            		require_once('php-sdk/autoload.php');
+				  	require_once __DIR__ . './php-sdk/autoload.php';
+					$accessKey = 'CFqxI4hAzpmyZYvcUmBhLIxNKmvNU1L0TSRqxrh0';
+				  	$secretKey = 'LY25gt1hGtF4E-QEaJCF1p_DPBT2SYrpN4pB5y5Y';
+				  	$auth = new Auth($accessKey,$secretKey);
+				  	$bucket = 'yangyang';
+				  	$token = $auth->uploadToken($bucket);
+				  	$uploadMgr = new UploadManager();
+				  	$filename = $name.'jpeg';
+				  	$uploadMgr->putFile($token,$filename,'D:/xampp/htdocs/Pets-Love/back-end/user/img/'.$name);
+				  	$Outside_the_chain='http://ob22j2b3f.bkt.clouddn.com/'.$filename;
+					update('host','h_photo',$Outside_the_chain,'h_secret_key',$h_secret_key);
+                	// echo "<center>您的文件已经上传完毕 上传图片预览: </center><br><center><img src='$uploadfile'></center>";
+                	// echo"<br><center><a href='javascrīpt:history.go(-1)'>继续上传</a></center>";
               	}
               	else{
                 	echo "上传失败！";
               	}
         	}
    		}
-      mysql_close($con);
 ?>
