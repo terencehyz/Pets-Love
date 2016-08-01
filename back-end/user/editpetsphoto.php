@@ -1,5 +1,5 @@
 <?php
-	//本文件用于上传宠物图片
+	//本文件用于编辑、修改宠物图片
 	include_once('../mysql/connect.php');
 	include_once('../mysql/lib/mysql-fun.php');
   //上传至云所需要
@@ -7,7 +7,7 @@
   use Qiniu\Processing\PersistentFop;
   use Qiniu\Storage\UploadManager;
    //secret_key id为前端传来的数据       
-    $pet_id = 12;
+  $id = 1;
   	$uploaddir = "./petsimg/";//设置文件保存目录 注意包含/  
   	$type=array("jpg","gif","bmp","jpeg","png");//设置允许上传文件的类型
   	$patch="http://127.0.0.1/pets-love/back-end/user/";//程序所在路径
@@ -70,8 +70,7 @@
                $filename = $name;
                $uploadMgr->putFile($token,$filename,'D:/xampp/htdocs/Pets-Love/back-end/user/petsimg/'.$name);
                $Outside_the_chain='http://ob82v1tc3.bkt.clouddn.com/'.$filename;
-               $sql="insert into p_picture (pet_id,p_img) values ('$pet_id','$Outside_the_chain')";
-               mysql_query($sql);
+               update('p_picture','p_img',$Outside_the_chain,'id',$id);
 
 
 
