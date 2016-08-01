@@ -14,7 +14,7 @@ final class Zone
 
     public static function zone0()
     {
-        return new self('http://up.qiniu.com', 'http://upload.qiniu.com');
+        return new self('http://up-z1.qiniu.com', 'http://upload.qiniu.com');
     }
 
     public static function zone1()
