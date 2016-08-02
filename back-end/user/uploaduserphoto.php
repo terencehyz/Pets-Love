@@ -8,7 +8,7 @@
 	use Qiniu\Storage\UploadManager;
 					
 	//secret_key 为前端传回来的数据
-	$h_secret_key="177c68686fe785db4fc2982bfbe7f3a7";
+	$h_secret_key="ebd629e5b4c603bf5beae17440e039c7";
   	$uploaddir = "./img/";//设置文件保存目录 注意包含/  
   	$type=array("jpg","gif","bmp","jpeg","png");//设置允许上传文件的类型
   	$patch="http://127.0.0.1/pets-love/back-end/user/";//程序所在路径
@@ -68,7 +68,7 @@
 				  	$bucket = 'yangyang';
 				  	$token = $auth->uploadToken($bucket);
 				  	$uploadMgr = new UploadManager();
-				  	$filename = $name.'jpeg';
+				  	$filename = $name;
 				  	$uploadMgr->putFile($token,$filename,'D:/xampp/htdocs/Pets-Love/back-end/user/img/'.$name);
 				  	$Outside_the_chain='http://ob22j2b3f.bkt.clouddn.com/'.$filename;
 					update('host','h_photo',$Outside_the_chain,'h_secret_key',$h_secret_key);

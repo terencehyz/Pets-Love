@@ -7,7 +7,7 @@
   use Qiniu\Processing\PersistentFop;
   use Qiniu\Storage\UploadManager;
    //secret_key id为前端传来的数据       
-    $pet_id = 12;
+    $pet_id = 25;
   	$uploaddir = "./petsimg/";//设置文件保存目录 注意包含/  
   	$type=array("jpg","gif","bmp","jpeg","png");//设置允许上传文件的类型
   	$patch="http://127.0.0.1/pets-love/back-end/user/";//程序所在路径
@@ -55,7 +55,6 @@
             	$uploadfile=$uploaddir.$name;
         	}
    			while(file_exists($uploadfile));
-        echo $uploadfile;
         	if(move_uploaded_file($_FILES['file']['tmp_name'],$uploadfile)){
 
             	if(!is_uploaded_file($_FILES['file']['tmp_name'])){

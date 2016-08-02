@@ -3,7 +3,7 @@
 	include_once('../mysql/connect.php');
 	include_once('../mysql/lib/mysql-fun.php');
 	include_once('../lib/json-fun.php');
-	$user_recognize="6f8272a2dc4d88a921a03ef059850677";//$_POST['h_secret_key'];
+	$user_recognize="ebd629e5b4c603bf5beae17440e039c7";//$_POST['h_secret_key'];
 	$data=query('host','h_secret_key',$user_recognize);
 	$h_id=$data['id'];
 	$sql="select * from pet where host_id=$h_id";
@@ -11,7 +11,19 @@
 	while ($str = mysql_fetch_assoc($query)) {
 			$pets_message[]=$str;
 		}
-	$json=ch_json_encode($pets_message);
-	echo $json;
-	mysql_close($con);
+	if(empty($pets_message)){
+		$json=json_encode(0);
+		return $json;
+	}
+	else{
+		$length=count($pets_message);
+		for($i=0;$i<$length;$i++){
+			$query=query('p_picture','pet_id',$pets_message[$i]['id']);
+			$pets_message[$i]['p_img']=$query['p_img'];
+		}
+		//向前端传回用户的所有宠物信息
+		$json=ch_json_encode($pets_message);
+		echo $json;
+		mysql_close($con);
+	}
 ?>

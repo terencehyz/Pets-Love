@@ -2,15 +2,16 @@
 	require_once('../mysql/connect.php');
 	require_once('../mysql/lib/mysql-fun.php');
 	//前端传来用户的信息
-	$new['p_name']="1";
-	$new['p_sex']="1";
-	$new['p_type']="1";
-	$new['p_age']="1";
-	$new['host_id']="12";
-	$new['p_about']="1";
-	$new['p_detail_type']="1";
+	$new['p_name']="小小A";
+	$new['p_sex']="雄性";
+	$new['p_type']="狗";
+	$new['p_age']="三个月";
+	$new['host_id']="23";
+	$new['p_about']="这是一只刚出生的小狗";
+	$new['p_detail_type']="藏獒";
 	$sql="select * from pet where host_id=$new[host_id]";
 	$query=mysql_query($sql);
+	$all_pets=array();
 	while($str=mysql_fetch_assoc($query)){
 		$all_pets[]=$str;
 	}

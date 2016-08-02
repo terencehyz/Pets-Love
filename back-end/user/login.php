@@ -7,8 +7,8 @@
 	//$array前端传输来的数据，此处为测试数据
 	//$json=file_get_contents('php://input',true);
 	//$array = json_decode($json,true);
-	$array['h_email']="yangyangds@imudges.com";//$_POST['h_email'];
-	$array['h_password']="123";//$_POST['h_password'];
+	$array['h_email']=$_POST['h_email'];//"yangyangds@imudges.com";
+	$array['h_password']=$_POST['h_password'];//"123";
 	$user_array=fetch_assoc("host","h_email",$array['h_email']);
 	$judge=0;
 	//此处的$array['h_password']为本文件中两次md5加密后的密码，在与前端对接完成后需改为一次md5加密
