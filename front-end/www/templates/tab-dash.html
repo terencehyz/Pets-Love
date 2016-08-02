@@ -1,5 +1,31 @@
 <ion-view view-title="Pets' Love">
   <ion-content>
 
+    <ion-slide-box on-slide-changed="slideHasChanged($index)" auto-play="true" does-continue="true" slide-interval=4000 show-pager="true" pager-click="pageClick(index)" active-slide="model.activeIndex" delegate-handle="delegateHandler">
+
+      <!--此处可用ng-repeat-->
+
+      <ion-slide>
+        <a ng-href="{{list.url}}" target="_blank">
+          <div class="box blue">
+            <img src="http://img.mukewang.com/5799cae500013bf604680172.jpg" class="boximg">
+          </div>
+        </a>
+      </ion-slide>
+      <ion-slide>
+        <div class="box yellow">
+          <img src="http://img.mukewang.com/579eb03a0001516d12000460.jpg" class="boximg">
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box pink">
+          <img src="http://img.mukewang.com/579b50570001bdf812000460.jpg" class="boximg">
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+
+
+
+
   </ion-content>
 </ion-view>

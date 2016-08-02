@@ -68,6 +68,41 @@ angular.module('starter.services', [])
   }
 })
 
+.factory('Pets', function () {
+
+  return {
+    allPets: function () {
+      var petsString = window.localStorage['pets'];
+      if (petsString) {
+        var pets = angular.fromJson(petsString);
+
+        return pets;
+      }
+      return [];
+    },
+
+    save: function (pets) {
+      window.localStorage['pets'] = angular.toJson(pets);
+    },
+
+    //创建一个新的宠物
+
+    newPet: function () {
+      return {
+        //indexId:0,
+        type:'',
+        typeDetail:'',
+        name:'',
+        sex:'',
+        age:'',
+        id:'',
+        about:'',
+        url:''
+      };
+    }
+  };
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

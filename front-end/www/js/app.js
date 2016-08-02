@@ -66,10 +66,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
           controller: 'userProfileCtrl'
         }
       }
-    }) 
-      
-      
-      
+    })
+
+
+
     /*关于我们*/
     .state('tab.aboutus', {
       url: '/account/aboutus',
@@ -94,7 +94,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
     })
 
      /*关注*/
-
     .state('tab.myFollowing', {
       url: '/account/myFollowing',
       views: {
@@ -105,25 +104,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       }
     })
 
-
-
-     /*宠物*/
-    .state('tab.mypet', {
-      url: '/account/mypet',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/mypet.html',
-          controller: 'myPetCtrl'
-        }
-      }
-    })
-
-    /*宠物详情*/
-    .state('myPetDetail',{
-      url:'/myPetDetail',
-      templateUrl:'templates/mypetdetail.html',
-      controller: 'myPetDetailCtrl'
-    })
 
     /*设置*/
     .state('tab.mysettings', {
@@ -220,8 +200,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       }
     }
   })
-
+/*宠物列表*/
    .state('tab.release',{
+     cache:false,
      url:'/release',
      views:{
        'tab-release':{
@@ -230,9 +211,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
        }
      }
    })
+/*宠物详情*/
+    .state('tab.petDetail',{
+      url:'/petDetail/:petId',
+      views:{
+        'tab-release':{
+          templateUrl:'templates/petDetail.html',
+          controller:'petDetailCtrl'
+        }
+      }
+    })
 
   .state('tab.account', {
-    cache: false,
     url: '/account',
     views: {
       'tab-account': {

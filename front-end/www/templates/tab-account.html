@@ -2,19 +2,14 @@
   <ion-content>
     <ion-list>
       <ion-item class="item item-thumbnail-left item-icon-right" href="#/tab/account/userProfile">
-        <img src="img/ionic.png">
-        <h2 style="margin-top: 10px">Pretty Hate Machine</h2>
-        <p>Nine Inch Nails</p>
-        <i class="icon ion-ios-arrow-right"></i>
+        <img src="{{userInfo.photo}}">
+        <h2 style="margin-top: 10px">{{userInfo.id}}</h2>
+        <p>{{userInfo.bio}}</p>
+        <i class="icon ion-ios-compose-outline"></i>
       </ion-item>
 
       <div class="item item-divider item-gap"></div>
 
-      <ion-item class="item item-icon-left item-icon-right" href="#/tab/account/mypet">
-        <i class="icon ion-ios-paw-outline"></i>
-        我的宠物
-        <i class="icon ion-ios-arrow-right"></i>
-      </ion-item>
 
       <ion-item class="item item-icon-left item-icon-right" href="#/tab/account/myFollowing">
         <i class="icon ion-ios-personadd-outline"></i>

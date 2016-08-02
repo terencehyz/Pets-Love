@@ -2,6 +2,18 @@
   <ion-content>
 
     <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" href="#">
+        <img ng-src="img/tom.JPG">
+        <h2>这是id</h2>
+        <p>这是简介</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button class="button-assertive" ng-click="">
+          取消关注
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="myfollow in following" type="item-text-wrap" href="#">
         <img ng-src="{{myfollow.face}}">
         <h2>{{myfollow.account}}</h2>

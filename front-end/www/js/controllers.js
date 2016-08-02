@@ -128,14 +128,58 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ReleaseCtrl',function ($scope) {
+.controller('ReleaseCtrl',function ($scope, $state, Pets) {
+
+  $scope.pets = Pets.allPets();
+
+  $scope.addPet = function () {
+    $state.go('tab.petDetail', {});
+  }
 
 })
-/*账户*/
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+
+/*宠物详情or添加新宠物*/
+.controller('petDetailCtrl',function ($scope, $state, $stateParams, Pets) {
+  $scope.DelButtonShow = false;
+
+  //获取记录详情
+  var petId = $stateParams.petId;
+  var pets = Pets.allPets();
+
+  //根据petId值，判断是编辑还是添加
+  if (petId) {
+
+    $scope.pet = pets[petId];
+    $scope.petId = petId;
+    $scope.DelButtonShow = true;
+
+    $scope.savePet = function () {
+
+      pets[petId] = $scope.pet;
+      Pets.save(pets);
+      $state.go('tab.release', { });
+    }
+
+  } else {
+    $scope.pet = Pets.newPet();
+    $scope.savePet = function () {
+      pets.push($scope.pet);
+      Pets.save(pets);
+      $state.go('tab.release', { });
+    }
+  }
+
+  //删除宠物
+  $scope.delPet = function (petId) {
+
+    pets.splice(petId, 1);
+    Pets.save(pets);
+    $state.go('tab.release', { });
   };
+})
+/*账户*/
+.controller('AccountCtrl', function($scope,userDetailInformation) {
+  $scope.userInfo=userDetailInformation.pluser();
 })
 /*设置*/
 .controller('MySettingsCtrl',function ($scope) {
@@ -153,16 +197,30 @@ angular.module('starter.controllers', [])
 .controller('aboutUsCtrl',function ($scope) {
 
 })
-/*我的宠物*/
-.controller('myPetCtrl',function ($scope) {
-
-})
-/*我的宠物详情*/
-.controller('myPetDetailCtrl',function ($scope) {
-
-})
 /*用户详情*/
 .controller('userProfileCtrl',function ($scope,userDetailInformation) {
   $scope.userInfo = userDetailInformation.pluser();
   console.log(JSON.stringify(userDetailInformation.pluser()))
+})
+/*首页轮播*/
+.controller('HouseCtrl', function($scope, $ionicSlideBoxDelegate) {
+  //为了验证属性active-slide定义的模型，angularjs是mvc模式
+  $scope.model = {
+    activeIndex:0
+  };
+
+//此事件对应的是pager-click属性，当显示图片是有对应数量的小圆点，这是小圆点的点击事件
+  $scope.pageClick = function(index){
+    //alert(index);
+
+    $scope.model.activeIndex = 2;
+  };
+
+//当图片切换后，触发此事件，注意参数
+  $scope.slideHasChanged = function($index){
+    //alert($index);
+
+  };
+  //这是属性delegate-handle的验证使用的，其实没必要重定义，直接使用$ionicSlideBoxDelegate就可以
+  $scope.delegateHandle = $ionicSlideBoxDelegate;
 });
