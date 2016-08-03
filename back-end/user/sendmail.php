@@ -15,15 +15,16 @@
 	$smtpserver = "smtp.163.com";//SMTP服务器
 	$smtpserverport =25;//SMTP服务器端口
 	$smtpusermail = "id_for_vb@163.com";//SMTP服务器的用户邮箱
-	$smtpemailto = 'yangyangds@imudges.com';//发送给谁
+	$smtpemailto = '929144090@qq.com';//发送给谁
 	$smtpuser = "id_for_vb";//SMTP服务器的用户帐号
 	$smtppass = "12345678910";//SMTP服务器的用户密码
-	$mailtitle = '测试标题';//邮件主题
-	$filename = 'email.html';
-	$handle = fopen($filename, "r");
-	$contents = fread($handle, filesize($filename));
-	fclose($handle);
-	$mailcontent = $contents;//邮件内容
+	$mailtitle = '邮箱验证';//邮件主题
+	//将email.html 内的代码读到$contents内，以html的格式发送邮件
+	// $filename = 'email.html';
+	// $handle = fopen($filename, "r");
+	// $contents = fread($handle, filesize($filename));
+	// fclose($handle);
+	$mailcontent = "您的验证码为：<br>请在30mins内完成验证。";//邮件内容
 	$mailtype = "HTML";//邮件格式（HTML/TXT）,TXT为文本邮件
 	//************************ 配置信息 ****************************
 	$smtp = new smtp($smtpserver,$smtpserverport,true,$smtpuser,$smtppass);//这里面的一个true是表示使用身份验证,否则不使用身份验证.
