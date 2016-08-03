@@ -1,5 +1,6 @@
 <?php
-
+	include_once('../mysql/connect.php');
+	include_once('../mysql/lib/mysql-fun.php');
 	/**
 	 * 注：本邮件类都是经过我测试成功了的，如果大家发送邮件的时候遇到了失败的问题，请从以下几点排查：
 	 * 1. 用户名和密码是否正确；
@@ -24,7 +25,23 @@
 	// $handle = fopen($filename, "r");
 	// $contents = fread($handle, filesize($filename));
 	// fclose($handle);
-	$mailcontent = "您的验证码为：<br>请在30mins内完成验证。";//邮件内容
+
+	//生成验证码
+	$captcha_code="";
+    for($i=0;$i<6;$i++)
+    {
+        $data='1234567890';
+        //从$data中随机取出元素
+        $fontcontent=substr($data,rand(0,strlen($data)),1);
+        $captcha_code .= $fontcontent;
+    }
+    //过期时间
+    $time = time()+1800;
+    //插入到数据库
+    $captcha_code=md5($captcha_code);
+    $sql="insert into captcha (contents,expiration_time) values ('$captcha_code','$time')";
+    mysql_query($sql);
+	$mailcontent = "您的验证码为：$captcha_code <br>请在30mins内完成验证。";//邮件内容
 	$mailtype = "HTML";//邮件格式（HTML/TXT）,TXT为文本邮件
 	//************************ 配置信息 ****************************
 	$smtp = new smtp($smtpserver,$smtpserverport,true,$smtpuser,$smtppass);//这里面的一个true是表示使用身份验证,否则不使用身份验证.
