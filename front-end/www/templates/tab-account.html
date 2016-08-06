@@ -1,5 +1,5 @@
 <ion-view view-title="我的">
-  <ion-content>
+  <ion-content style="background-color: rgb(245,245,245)">
     <ion-list>
       <ion-item class="item item-thumbnail-left item-icon-right" href="#/tab/account/userProfile">
         <img src="{{userInfo.photo}}">
@@ -39,7 +39,7 @@
         <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
     </ion-list>
-    <button class="button button-full button-assertive">
+    <button class="button button-full button-assertive" ng-click="logout()">
       退出登录
     </button>
   </ion-content>

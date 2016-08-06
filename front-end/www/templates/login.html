@@ -4,17 +4,16 @@
     <div class="list">
       <label class="item item-input item-floating-label">
         <span class="input-label">邮箱</span>
-        <input type="email" placeholder="邮箱" ng-model="loginemail">
+        <input type="email" placeholder="邮箱" ng-model="data.mail">
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">密码</span>
-        <input type="password" placeholder="密码" ng-model="loginpwd">
+        <input type="password" placeholder="密码" ng-model="data.password">
       </label>
-      <p class="create-account-p" ng-hide="loginvalid">密码或用户名错误 请重新输入</p>
     </div>
 
     <div class="row padding-bottom">
-      <button class="button button-outline button-positive col col-80 col-offset-10 button-small" ng-click="servervalid()">登陆我的账户</button>
+      <button class="button button-outline button-positive col col-80 col-offset-10 button-small" ng-click="login()">登陆我的账户</button>
     </div>
     <div class="row padding-top">
       <button class="button button-clear button-positive col-offset-10 col-33" ng-click="turncreate()">快速注册</button>

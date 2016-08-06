@@ -37,19 +37,9 @@ angular.module('starter.controllers', [])
 .controller('ForgetPwdCtrl',function ($scope,$state,NewPassword) {
 })
 /*登陆*/
-.controller('LoginCtrl',function ($scope,$state) {
-  $scope.loginmail='';
-  $scope.loginpwd='';
-  $scope.loginvalid=true;
-  $scope.servervalid=function () {
-    /*此处向服务器验证账号密码是否匹配*/
-    if($scope.loginvalid){
-      $state.go('tab.dash');
-    }
-    else{
-      loginvalid=false;
-    }
-  };
+.controller('LoginCtrl',function ($scope,  $ionicPopup, $state, $ionicLoading, $window, $ionicPlatform,AccountService) {
+
+  $scope.data={};
   $scope.turncreate=function () {
     $state.go('create-account')
   };
@@ -57,51 +47,136 @@ angular.module('starter.controllers', [])
   $scope.turnforget=function () {
     $state.go('forget-password.email')
   };
+
+  $scope.login=function () {
+    $ionicLoading.show({
+      template:'登陆中'
+    });
+
+    AccountService.loginUser($scope.data.mail,$scope.data.password).then(function (data) {
+      if(data.judge==1){
+        localStorage.haslogin=1;
+        $ionicLoading.hide();
+        $state.go('tab.dash');
+      }
+      else{
+        localStorage.haslogin=0;
+        $ionicLoading.hide();
+        var alertPopup = $ionicPopup.alert({
+          title: '登录失败',
+          template: '密码或用户名错误！'
+        });
+      }
+    })
+  }
 })
 /*注册*/
-.controller('CreateAccountCtrl',function ($scope,$state) {
-  $scope.createnickname='';
-  $scope.createemail='';
-  $scope.createpwd1='';
-  $scope.createpwd2='';
-  $scope.namevaild=true;
-  $scope.emailvaild=true;
-  $scope.createerror=false;
-  $scope.incomplete=false;
+.controller('CreateAccountCtrl',function ($scope, $state, $ionicPopup,$ionicLoading,AccountService) {
+
+  $scope.data={};
+
+  $scope.register=function () {
+    //注册功能
+    //检测用户输入
+    //判断空的输入
+    var email=$scope.data.mail;
+    var name=$scope.data.nickname;
+    var password = $scope.data.password;
+    var passwordconfirm = $scope.data.passwordconfirm;
+    if(checkMail(email)){
+      //检查两次密码是否相同
+      if(name==undefined||name==''){
+        var alertPopup=$ionicPopup.alert({
+          title:'用户名出错',
+          template:'用户名不能为空！'
+        });
+      }else if(password==undefined||passwordconfirm==undefined){
+        var alertPopup=$ionicPopup.alert({
+          title:'密码出错',
+          template:'密码不能低于六位！'
+        });
+      }else if(password.length<6){
+        var alertPopup=$ionicPopup.alert({
+          title:'密码出错',
+          template:'密码不能低于六位！'
+        });
+      }else{
+        if(password!=passwordconfirm){
+          var alertPopup=$ionicPopup.alert({
+            title:'两次密码不一致',
+            template:'请检查输入的密码'
+          });
+        }
+        else{
+          // $ionicLoading.show({
+          //   template:'注册中'
+          // });
+          console.log('3');
+          AccountService.register(email,name,password).then(function (res) {
+            console.log('4');
+            //alert(JSON.stringify(res));
+            //$ionicLoading.hide();
+            if(res.response==1){
+              var alertPopup=$ionicPopup.alert({
+                title:'注册成功',
+                template:'现在可以去登陆了！'
+              });
+              alertPopup.then(function(res){
+                //确认后跳转
+                $state.go('login');
+              })
+            }
+            console.log(typeof res.response);
+            console.log(res.response);
+            if(res.response==-1){
+               var alertPopup=$ionicPopup.alert({
+                 title:'注册失败',
+                 template:'此邮箱已经注册,请更换'
+               });
+            }
+          });
+          console.log('5');
+          //.then(function(data){
+          //   console.log(data);
+          //   //注册成功，并提示用户
+          //   $ionicLoading.hide();
+          //   var alertPopup=$ionicPopup.alert({
+          //     title:'注册成功',
+          //     template:'现在可以去登陆了！'
+          //   });
+          //   alertPopup.then(function(res){
+          //     //确认后跳转
+          //     $state.go('login');
+          //   })
+          // }).error(function (data) {
+          //   $ionicLoading.hide();
+          //   var alertPopup=$ionicPopup.alert({
+          //     title:'注册失败',
+          //     template:'此邮箱已经注册,请修改后重新注册！'
+          //   });
+          // })
+        }
+      }
+    }else{
+      var alertPopup=$ionicPopup.alert({
+        title:'邮箱错误',
+        template:'请修改后重新注册！'
+      });
+    }
+  };
+
+  var checkMail = function(szMail) {
+    //var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+    var szReg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,4}$/;;
+    var bChk = szReg.test(szMail);
+    return bChk;
+  }
 
   $scope.turnlogin=function () {
     $state.go('login');
   };
   $scope.turndash=function () {
     $state.go('tab.dash');
-  };
-
-  $scope.$watch('createnickname',function () {
-    $scope.test();
-  });
-  $scope.$watch('createemail',function () {
-    $scope.test();
-  });
-  $scope.$watch('createpwd1',function () {
-    $scope.test();
-  });
-  $scope.$watch('createpwd2',function () {
-    $scope.test();
-  });
-  $scope.test=function () {
-    if($scope.createpwd1==$scope.createpwd2){
-      $scope.createerror=false;
-    }
-    else{
-      $scope.createerror=true;
-    }
-
-    if(!$scope.createemail.length||!$scope.createpwd1.length||!$scope.createpwd2.length||!$scope.createnickname.length){
-      $scope.incomplete=true;
-    }
-    else{
-      $scope.incomplete=false;
-    }
   };
 })
 /*聊天*/
@@ -179,8 +254,24 @@ angular.module('starter.controllers', [])
 })
 /*账户*/
 .controller('AccountCtrl', function($scope,userDetailInformation) {
+
   $scope.userInfo=userDetailInformation.pluser();
+
+  $scope.logout = function() {
+    localStorage.removeItem("haslogin");
+    $scope.data.mail = "";
+    $scope.data.password = "";
+    localStorage.secretKey = "";
+    localStorage.mail = "";
+    localStorage.account = "";
+    localStorage.phone = "";
+    localStorage.photo = "";
+    localStorage.pets = "";
+    $state.go("login");
+  }
+
 })
+
 /*设置*/
 .controller('MySettingsCtrl',function ($scope) {
 
@@ -198,9 +289,29 @@ angular.module('starter.controllers', [])
 
 })
 /*用户详情*/
-.controller('userProfileCtrl',function ($scope,userDetailInformation) {
+.controller('userProfileCtrl',function ($scope,userDetailInformation,AccountService) {
   $scope.userInfo = userDetailInformation.pluser();
-  console.log(JSON.stringify(userDetailInformation.pluser()))
+  console.log(JSON.stringify(userDetailInformation.pluser()));
+
+  $scope.saveInfo=function (userInfo) {
+    $ionicLoading.show({
+      template:'更新中'
+    });
+    AccountService.modify(userInfo).success(function (data) {
+      $ionicLoading.hide();
+      var alertPopup=$ionicPopup.alert({
+        title:'已保存',
+        template:'个人信息已更新！'
+      });
+    }).error(function (data) {
+      $ionicLoading.hide();
+      var alertPopup=$ionicPopup.alert({
+        title:'修改失败！',
+        template:'邮箱格式错误！'
+      });
+    })
+  }
+
 })
 /*首页轮播*/
 .controller('HouseCtrl', function($scope, $ionicSlideBoxDelegate) {

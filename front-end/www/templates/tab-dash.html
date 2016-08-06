@@ -1,31 +1,90 @@
-<ion-view view-title="Pets' Love">
+<ion-view view-title="Pets' Love" style="background-color: #FF9800">
   <ion-content>
 
     <ion-slide-box on-slide-changed="slideHasChanged($index)" auto-play="true" does-continue="true" slide-interval=4000 show-pager="true" pager-click="pageClick(index)" active-slide="model.activeIndex" delegate-handle="delegateHandler">
 
       <!--此处可用ng-repeat-->
-
       <ion-slide>
-        <a ng-href="{{list.url}}" target="_blank">
-          <div class="box blue">
-            <img src="http://img.mukewang.com/5799cae500013bf604680172.jpg" class="boximg">
-          </div>
-        </a>
-      </ion-slide>
-      <ion-slide>
-        <div class="box yellow">
-          <img src="http://img.mukewang.com/579eb03a0001516d12000460.jpg" class="boximg">
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="box pink">
-          <img src="http://img.mukewang.com/579b50570001bdf812000460.jpg" class="boximg">
-        </div>
-      </ion-slide>
+    <a ng-href="{{list.url}}" target="_blank">
+      <div class="box blue">
+        <img src="http://img.mukewang.com/5799cae500013bf604680172.jpg" class="boximg">
+      </div>
+    </a>
+  </ion-slide>
+    <ion-slide>
+      <div class="box yellow">
+        <img src="http://img.mukewang.com/579eb03a0001516d12000460.jpg" class="boximg">
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="box pink">
+        <img src="http://img.mukewang.com/579b50570001bdf812000460.jpg" class="boximg">
+      </div>
+    </ion-slide>
     </ion-slide-box>
 
 
+    <h3 style="color: white; margin-top: 6%; margin-left: 5%">
+      <i class="icon ion-bookmark"></i>
+      萌宠筛选
+    </h3>
 
+    <div id="search-bar">
+      <div class="item item-input-inset" style="background-color: #FF9800;border: none">
+        <label class="item-input-wrapper" id="search-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="search" placeholder="Search" ng-model="query" ng-change="search(query)" autocorrect="off">
+        </label>
+        <button class="button button-stable button-small">
+          搜索
+        </button>
+      </div>
+    </div>
+
+    <h3 style="color: white; margin-top: 6%; margin-left: 5%">
+      <i class="icon ion-bookmark"></i>
+      萌宠推荐
+    </h3>
+
+    <div class="list">
+
+      <div class="item item-body" style="margin:3% 0;background-color: rgb(249,249,249)">
+        <div>
+          <h2 style="color: rgb(113,113,113);font-weight: bolder">Sally</h2>
+          <p style="color: #BDBDBD">3岁 女生 哈士奇</p>
+        </div>
+        <img src="img/dog1.jpg" style="width: 50%; margin-left: 25%">
+        <img src="img/dog2.jpg" style="width: 50%; margin-left: 25%" ng-repeat="" ng-show="">
+        <p>
+          This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+          the content is from a card-body consisting of an image and paragraph text. The footer
+        </p>
+        <div class="item item-avatar">
+          <img src="img/perry.png">
+          <h2 style="margin-top: 0px;margin-bottom: 0px">Marty McFly</h2>
+          <a href="#" style="text-decoration: none">Chat</a>
+        </div>
+      </div>
+
+      <div class="list">
+        <div class="item item-body" style="margin:3% 0;background-color: rgb(249,249,249)">
+          <div style="margin-bottom: 5%">
+            <h2 style="color: rgb(113,113,113);font-weight: bolder">bada</h2>
+            <p style="color: #BDBDBD">1岁 男生 布吉岛</p>
+          </div>
+          <img src="img/dog2.jpg" style="width: 50%; margin-left: 25%">
+          <img src="img/dog2.jpg" style="width: 50%; margin-left: 25%" ng-repeat="" ng-show="">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, distinctio earum error esse eum expedita facilis ipsum iusto labore odit placeat, praesentium rerum sed temporibus ut veritatis voluptatibus. Accusamus, consequuntur!
+          </p>
+          <div class="item item-avatar">
+            <img src="img/perry.png">
+            <h2 style="margin-top: 0px;margin-bottom: 0px">Marty McFly</h2>
+            <a href="#" style="text-decoration: none">Chat</a>
+          </div>
+        </div>
+
+    </div>
 
   </ion-content>
 </ion-view>
