@@ -17,9 +17,10 @@ function ch_json_encode($data){
 	                }
 	            }
 	        }
-	        return$data;
+	        return $data;
 	    }
-	    $ret = ch_urlencode($data);
+	    echo 1;
+	 $ret = ch_urlencode($data);
     $ret =json_encode($ret);
     return urldecode($ret);
 }
