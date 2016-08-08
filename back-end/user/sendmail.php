@@ -1,4 +1,6 @@
 <?php
+	header( 'Access-Control-Allow-Origin:*' );
+	$email=$_GET['h_email'];
 	include_once('../mysql/connect.php');
 	include_once('../mysql/lib/mysql-fun.php');
 	/**
@@ -10,13 +12,12 @@
 	 * 5. 如果还是不能解决，可以访问：http://www.daixiaorui.com/read/16.html#viewpl 
 	 *    下面的评论中，可能有你要找的答案。
 	 */
-
 	require_once "email.class.php";
 	//******************** 配置信息 ********************************
 	$smtpserver = "smtp.163.com";//SMTP服务器
 	$smtpserverport =25;//SMTP服务器端口
 	$smtpusermail = "id_for_vb@163.com";//SMTP服务器的用户邮箱
-	$smtpemailto = $message['h_email'];//发送给谁
+	$smtpemailto = $email;//发送给谁
 	$smtpuser = "id_for_vb";//SMTP服务器的用户帐号
 	$smtppass = "12345678910";//SMTP服务器的用户密码
 	$mailtitle = '邮箱验证';//邮件主题
