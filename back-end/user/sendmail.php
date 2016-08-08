@@ -16,7 +16,7 @@
 	$smtpserver = "smtp.163.com";//SMTP服务器
 	$smtpserverport =25;//SMTP服务器端口
 	$smtpusermail = "id_for_vb@163.com";//SMTP服务器的用户邮箱
-	$smtpemailto = '929144090@qq.com';//发送给谁
+	$smtpemailto = $message['h_email'];//发送给谁
 	$smtpuser = "id_for_vb";//SMTP服务器的用户帐号
 	$smtppass = "12345678910";//SMTP服务器的用户密码
 	$mailtitle = '邮箱验证';//邮件主题
