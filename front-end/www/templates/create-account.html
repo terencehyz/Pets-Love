@@ -3,31 +3,29 @@
     <img src="img/ionic.png" alt="logo" class="create-account-logo">
     <div class="list">
       <label class="item item-input item-floating-label">
-        <span class="input-label"><span ng-show="!namevaild">此</span>昵称<span ng-show="!namevaild">已被占用 请更换</span></span>
-        <input type="text" placeholder="昵称" ng-model="createnickname">
+        <span class="input-label">昵称</span>
+        <input type="text" placeholder="昵称" ng-model="data.nickname">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label"><span ng-show="!emailvaild">此</span>邮箱<span ng-show="!emailvaild">已被占用 请更换</span></span>
-        <input type="email" placeholder="Email" ng-model="createemail">
+        <span class="input-label">邮箱</span>
+        <input type="email" placeholder="Email" ng-model="data.mail">
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">密码</span>
-        <input type="password" placeholder="密码" ng-model="createpwd1">
+        <input type="password" placeholder="密码" ng-model="data.password">
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">再次输入密码</span>
-        <input type="password" placeholder="再次输入密码" ng-model="createpwd2">
+        <input type="password" placeholder="再次输入密码" ng-model="data.passwordconfirm">
       </label>
-      <div >
-        <p class="create-account-p" ng-show="false">密码两次输入不相同</p>
-      </div>
     </div>
     <div class="row padding-top">
-      <button class="button button-outline button-positive col col-80 col-offset-10 button-small" ng-click="turndash()" ng-disabled="createerror||incomplete">注册</button>
+      <button class="button button-outline button-positive col col-80 col-offset-10 button-small" ng-click="register()">注册</button>
     </div>
     <p class="create-account-p">注册即表明你同意Pets'Love的条款和隐私权政策.</p>
     <div class="row">
       <button class="button button-clear button-positive col-offset-33 col-33" ng-click="turnlogin()">登陆账号</button>
+      <button class="button button-clear button-positive  col-33" ng-click="turndash()">主页</button>
     </div>
   </ion-content>
 </ion-view>

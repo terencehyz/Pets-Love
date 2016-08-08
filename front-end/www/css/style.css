@@ -1,5 +1,8 @@
 /* Empty. Add your own CSS if you like */
-
+.mainBack{
+  background-image: url("../img/mainbackground.png");
+  background-size: cover;
+}
 
 .box{
   width: 100%;

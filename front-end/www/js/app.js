@@ -55,8 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       templateUrl:'templates/create-account.html',
       controller: 'CreateAccountCtrl'
     })
-
-
+      
     /*用户资料*/
     .state('tab.userProfile', {
       url: '/account/userProfile',
@@ -68,8 +67,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       }
     })
 
-
-
     /*关于我们*/
     .state('tab.aboutus', {
       url: '/account/aboutus',
@@ -80,7 +77,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
         }
       }
     })
-
 
     /*粉丝*/
     .state('tab.myFollower', {
@@ -104,7 +100,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       }
     })
 
-
     /*设置*/
     .state('tab.mysettings', {
       url: '/account/mysettings',
@@ -115,7 +110,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
         }
       }
     })
-
 
     /*忘记密码*/
     .state('forget-password',{

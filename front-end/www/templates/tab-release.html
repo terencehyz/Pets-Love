@@ -2,7 +2,7 @@
   <ion-nav-buttons side="right">
     <a class="button button-clear" ng-click="addPet()"> 添加 </a>
   </ion-nav-buttons>
-  <ion-content>
+  <ion-content style="background-color: rgb(242,242,242)">
     <!--
     <button class="button button-stable button-block" ng-click="addPet()">
 
@@ -23,13 +23,10 @@
         <img src="{{pet.url}}">
         <h2>{{pet.name}}</h2>
         <p>{{pet.about}}</p>
-      </div>
-
-      <div class="row">
-        <a class="button button-full button-positive col-33" ng-href="#/tab/petDetail/{{$index}}">
-          <i class="icon ion-ios-list-outline"></i>
-          更多
-        </a>
+          <a class="subdued" ng-href="#/tab/petDetail/{{$index}}">
+            <i class="icon ion-ios-list-outline"></i>
+            更多
+          </a>
       </div>
 
     </div>
