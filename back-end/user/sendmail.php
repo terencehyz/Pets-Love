@@ -39,11 +39,15 @@
     //过期时间
     $time = time()+1800;
     //插入到数据库
-    $captcha_code=md5($captcha_code);
-    $sql="insert into captcha (contents,expiration_time) values ('$captcha_code','$time')";
-    mysql_query($sql);
+    // $captcha_code=md5($captcha_code);
+    // $sql="insert into captcha (contents,expiration_time,'h_email') values ('$captcha_code','$time','929144090@qq.com')";
+    // mysql_query($sql);
 	$mailcontent = "您的验证码为：$captcha_code <br>请在30mins内完成验证。";//邮件内容
 	$mailtype = "HTML";//邮件格式（HTML/TXT）,TXT为文本邮件
+	//插入到数据库
+    $captcha_code=md5($captcha_code);
+    $sql="insert into captcha (contents,expiration_time,h_email) values ('$captcha_code','$time','$email')";
+    mysql_query($sql);
 	//************************ 配置信息 ****************************
 	$smtp = new smtp($smtpserver,$smtpserverport,true,$smtpuser,$smtppass);//这里面的一个true是表示使用身份验证,否则不使用身份验证.
 	$smtp->debug = false;//是否显示发送的调试信息
@@ -51,12 +55,9 @@
 
 	echo "<div style='width:300px; margin:36px auto;'>";
 	if($state==""){
-		echo "对不起，邮件发送失败！请检查邮箱填写是否有误。";
-		echo "<a href='index.html'>点此返回</a>";
-		exit();
+		$json['judge']=json_encode(0);
+		return ;
 	}
-	echo "恭喜！邮件发送成功！！";
-	echo "<a href='index.html'>点此返回</a>";
-	echo "</div>";
+	$json['judge']=json_encode(1);
 
 ?>
