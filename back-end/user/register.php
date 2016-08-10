@@ -30,7 +30,7 @@
 		//向前端返回-1 用户输入账号重复
 	}
 	else{
-		//前端传来的密码为一次md5加密后的密码，在服务器再进行md5加密，此处为未与前端传输的测试，两次md5加密
+		//前端传来的密码为一次md5加密后的密码，在服务器再进行md5加密
 		$message_array['h_password']=md5($message_array['h_password']);
 		if(insert_register($message_array)){
 			$return['response']=1;

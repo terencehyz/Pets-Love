@@ -17,7 +17,7 @@
 	$smtpserver = "smtp.163.com";//SMTP服务器
 	$smtpserverport =25;//SMTP服务器端口
 	$smtpusermail = "id_for_vb@163.com";//SMTP服务器的用户邮箱
-	$smtpemailto = $email;//发送给谁
+	$smtpemailto = $email;//$email;//发送给谁
 	$smtpuser = "id_for_vb";//SMTP服务器的用户帐号
 	$smtppass = "12345678910";//SMTP服务器的用户密码
 	$mailtitle = '邮箱验证';//邮件主题
@@ -37,6 +37,7 @@
         $captcha_code .= $fontcontent;
     }
     //过期时间
+    
     $time = time()+1800;
     //插入到数据库
     // $captcha_code=md5($captcha_code);
@@ -53,11 +54,14 @@
 	$smtp->debug = false;//是否显示发送的调试信息
 	$state = $smtp->sendmail($smtpemailto, $smtpusermail, $mailtitle, $mailcontent, $mailtype);
 
-	echo "<div style='width:300px; margin:36px auto;'>";
 	if($state==""){
-		$json['judge']=json_encode(0);
+		$json['judge']=0;
+		$json=json_encode($json);
+		echo $json;
 		return ;
 	}
-	$json['judge']=json_encode(1);
+	$json['judge']=1;
+	$json=json_encode($json);
+	echo $json;
 
 ?>

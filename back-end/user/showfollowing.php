@@ -8,7 +8,7 @@
 		# code...
 		$sqll = mysql_query(" select h_account,h_location,h_photo from host where id = $row[h_id]");
 		while ($roww = mysql_fetch_array($sqll)) {
-			$message[]=$roww;
+			$message[]=$row;
 		}
 	
 		echo  "<br/>";
