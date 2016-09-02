@@ -1,10 +1,10 @@
 <ion-view view-title="我的">
   <ion-content style="background-color: rgb(245,245,245)">
     <ion-list>
-      <ion-item class="item item-thumbnail-left item-icon-right" href="#/tab/account/userProfile">
+      <ion-item class="item item-thumbnail-left item-icon-right" ng-href="{{more}}">
         <img src="{{userInfo.photo}}">
         <h2 style="margin-top: 10px">{{userInfo.id}}</h2>
-        <p>{{userInfo.bio}}</p>
+        <p>{{userInfo.email}}</p>
         <i class="icon ion-ios-compose-outline"></i>
       </ion-item>
 

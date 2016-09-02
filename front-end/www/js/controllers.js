@@ -4,40 +4,85 @@ angular.module('starter.controllers', [])
 
 })
 /*忘记密码1-3*/
-.controller('forget1',function($scope,$state,NewPassword){
-  $scope.youxiang="";
+.controller('forget1',function($scope,$state,$ionicPopup,AccountService){
+  $scope.data={
+    youxiang:''
+  }
   $scope.step1=function () {
-    NewPassword.lose.mail=$scope.youxiang;
-    $state.go('forget-password.code');
-    console.log(NewPassword.lose)
+    console.log($scope.data.youxiang);
+    localStorage.setItem("findPwd",$scope.data.youxiang);
+    AccountService.getCode($scope.data.youxiang).then(function (data) {
+      if(data.judge_email==1){
+        AccountService.CodeMail($scope.data.youxiang).then(function (res) {
+          if(res.judge==1){
+            $state.go('forget-password.code');
+          }
+          else{
+            var alertPopup = $ionicPopup.alert({
+              title: '发生错误',
+              template: '请重试'
+            });
+          }
+        });
+      }
+      else{
+        var alertPopup = $ionicPopup.alert({
+          title: '邮箱错误',
+          template: '此邮箱未注册，请重新填写！'
+        });
+      }
+    });
+
   }
 })
-.controller('forget2',function($scope,$state,NewPassword){
+.controller('forget2',function($scope,$state,$ionicPopup,AccountService){
   $scope.recode="";
   $scope.step2=function () {
-    NewPassword.lose.code=$scope.recode;
-    $state.go('forget-password.re');
-    console.log(NewPassword.lose)
+    AccountService.toNew($scope.recode).then(function (data) {
+      if(data.judge==1){
+        $state.go('forget-password.re');
+      }
+      else{
+        var alertPopup = $ionicPopup.alert({
+          title: '验证码错误',
+          template: '请重新填写！'
+        });
+      }
+    });
   };
 })
-.controller('forget3',function($scope,$state,NewPassword){
-  $scope.resuccess=false;
+.controller('forget3',function($scope,$state,$ionicPopup,AccountService){
   $scope.pass={
     pass1:"",
     pass2:""
   };
   $scope.step3=function () {
-    NewPassword.lose.password1=$scope.pass.pass1;
-    NewPassword.lose.password2=$scope.pass.pass2;
-    NewPassword.lose.password=$scope.pass.pass2;
-    $state.go('login');
-    console.log(NewPassword.lose)
+    AccountService.aNew($scope.pass.pass1).then(function (data) {
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '修改成功',
+          template: '去登陆'
+        });
+        $state.go('login');
+      }
+      else{
+        var alertPopup = $ionicPopup.alert({
+          title: '错误',
+          template: '请重新填写！'
+        });
+      }
+    });
   };
 })
-.controller('ForgetPwdCtrl',function ($scope,$state,NewPassword) {
+.controller('ForgetPwdCtrl',function ($scope,$state,AccountService) {
 })
 /*登陆*/
 .controller('LoginCtrl',function ($scope,  $ionicPopup, $state, $ionicLoading, $window, $ionicPlatform,AccountService) {
+  //自动跳转到主页
+  if(localStorage.haslogin==1)
+  {
+    $state.go('tab.dash');
+  }
 
   $scope.data={};
   $scope.turncreate=function () {
@@ -136,25 +181,6 @@ angular.module('starter.controllers', [])
             }
           });
           console.log('5');
-          //.then(function(data){
-          //   console.log(data);
-          //   //注册成功，并提示用户
-          //   $ionicLoading.hide();
-          //   var alertPopup=$ionicPopup.alert({
-          //     title:'注册成功',
-          //     template:'现在可以去登陆了！'
-          //   });
-          //   alertPopup.then(function(res){
-          //     //确认后跳转
-          //     $state.go('login');
-          //   })
-          // }).error(function (data) {
-          //   $ionicLoading.hide();
-          //   var alertPopup=$ionicPopup.alert({
-          //     title:'注册失败',
-          //     template:'此邮箱已经注册,请修改后重新注册！'
-          //   });
-          // })
         }
       }
     }else{
@@ -253,20 +279,32 @@ angular.module('starter.controllers', [])
   };
 })
 /*账户*/
-.controller('AccountCtrl', function($scope,userDetailInformation) {
+.controller('AccountCtrl', function($scope,$state,$ionicPopup,userDetailInformation) {
+
+  console.log(localStorage);
+
+  if(localStorage.haslogin==1){
+    $scope.more="#/tab/account/userProfile";
+  }
+  else{
+    $scope.more="#/login";
+  }
 
   $scope.userInfo=userDetailInformation.pluser();
 
   $scope.logout = function() {
-    localStorage.removeItem("haslogin");
-    $scope.data.mail = "";
-    $scope.data.password = "";
+    localStorage.sex="";
+    localStorage.haslogin=0;
     localStorage.secretKey = "";
     localStorage.mail = "";
     localStorage.account = "";
     localStorage.phone = "";
     localStorage.photo = "";
     localStorage.pets = "";
+    localStorage.password="";
+
+    console.log(localStorage);
+
     $state.go("login");
   }
 
@@ -277,7 +315,10 @@ angular.module('starter.controllers', [])
 
 })
 /*关注的人*/
-.controller('myFollowingCtrl',function ($scope) {
+.controller('myFollowingCtrl',function ($scope,$state) {
+  /*$scope.find=function () {
+    $state.go('forget-password.re');
+  }*/
 
 })
 /*我的粉丝*/
@@ -289,27 +330,64 @@ angular.module('starter.controllers', [])
 
 })
 /*用户详情*/
-.controller('userProfileCtrl',function ($scope,userDetailInformation,AccountService) {
+.controller('userProfileCtrl',function ($scope,$stateParams,$ionicPopup,$ionicLoading,userDetailInformation,AccountService) {
+
   $scope.userInfo = userDetailInformation.pluser();
+
   console.log(JSON.stringify(userDetailInformation.pluser()));
 
   $scope.saveInfo=function (userInfo) {
-    $ionicLoading.show({
-      template:'更新中'
-    });
-    AccountService.modify(userInfo).success(function (data) {
-      $ionicLoading.hide();
+
+    if(checkMail(userInfo.email)){
+      if(userInfo.id==undefined||userInfo.id=='') {
+        var alertPopup = $ionicPopup.alert({
+          title: '昵称错误',
+          template: '昵称不能为空！'
+        });
+      }
+      else{
+        if(userInfo.phone==undefined||userInfo.phone==''){
+          var alertPopup = $ionicPopup.alert({
+            title: '电话错误',
+            template: '电话不能为空！'
+          });
+        }
+        else{
+          $ionicLoading.show({
+            template:'更新中'
+          });
+          AccountService.modify(userInfo).then(function(data){
+            $ionicLoading.hide();
+            if(data.judge==1){
+              var alertPopup=$ionicPopup.alert({
+                title:'已保存',
+                template:'个人信息已更新！'
+              });
+            }
+            else{
+              var alertPopup=$ionicPopup.alert({
+                title:'修改失败！',
+                template:'邮箱格式错误！'
+              });
+            }
+          })
+        }
+      }
+
+
+    }else{
       var alertPopup=$ionicPopup.alert({
-        title:'已保存',
-        template:'个人信息已更新！'
+        title:'邮箱错误',
+        template:'请重新填写邮箱！'
       });
-    }).error(function (data) {
-      $ionicLoading.hide();
-      var alertPopup=$ionicPopup.alert({
-        title:'修改失败！',
-        template:'邮箱格式错误！'
-      });
-    })
+    }
+  }
+
+  var checkMail = function(szMail) {
+    //var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+    var szReg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,4}$/;;
+    var bChk = szReg.test(szMail);
+    return bChk;
   }
 
 })

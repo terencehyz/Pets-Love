@@ -55,7 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       templateUrl:'templates/create-account.html',
       controller: 'CreateAccountCtrl'
     })
-      
+
     /*用户资料*/
     .state('tab.userProfile', {
       url: '/account/userProfile',
@@ -175,7 +175,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
         }
       }
     })
-    .state('tab.chat-detail', {
+  .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
         'tab-chats': {
@@ -195,7 +195,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
     }
   })
 /*宠物列表*/
-   .state('tab.release',{
+  .state('tab.release',{
      cache:false,
      url:'/release',
      views:{
@@ -206,7 +206,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
      }
    })
 /*宠物详情*/
-    .state('tab.petDetail',{
+  .state('tab.petDetail',{
       url:'/petDetail/:petId',
       views:{
         'tab-release':{
@@ -217,6 +217,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
     })
 
   .state('tab.account', {
+    cache:false,
     url: '/account',
     views: {
       'tab-account': {

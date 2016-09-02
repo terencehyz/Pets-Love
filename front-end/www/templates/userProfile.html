@@ -3,27 +3,29 @@
     <ion-list>
       <ion-item class="item" style="background-image: url(img/userdetail.png);background-size: cover">
         <img style="width:20%; margin-left: 40%; margin-top:5%; margin-bottom: 5%;" src="{{userInfo.photo}}" ng-click="">
+        <p style="text-align: center">{{userInfo.email}}</p>
       </ion-item>
       <ion-item class="item item-input">
         <div class="input-label">昵称</div>
         <input type="text" ng-model='userInfo.id'>
       </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">
+          性别
+        </div>
+        <select ng-model='userInfo.sex'>
+          <option>男</option>
+          <option>女</option>
+        </select>
+      </ion-item>
       <ion-item class="item item-input">
         <div class="input-label"> 电话号码 </div>
         <input type="text" ng-model="userInfo.phone">
       </ion-item>
-      <ion-item class="item item-input">
+      <!--<ion-item class="item item-input">
         <div class="input-label"> 邮箱 </div>
         <input type="text" ng-model="userInfo.email">
-      </ion-item>
-      <ion-item class="item item-input">
-        <div class="input-label"> 简介 </div>
-        <input type="text" ng-model="userInfo.bio">
-      </ion-item>
-      <ion-item class="item item-input">
-        <div class="input-label"> 密码 </div>
-        <input type="text" ng-model="userInfo.password">
-      </ion-item>
+      </ion-item>-->
     </ion-list>
     <button class="button button-full button-balanced" ng-click="saveInfo(userInfo)"> 保存 </button>
   </ion-content>
