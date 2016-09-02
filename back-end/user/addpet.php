@@ -45,4 +45,5 @@
 		echo $json;
 	}
 	mysql_close($con);
+	//test
 ?>
