@@ -40,7 +40,14 @@
 		// $return ['h_photo']=$user_message['h_photo'];
 		// $return ['id']=$user_message['id'];
 		$user_message['judge']=1;
-		$user_message['pet']=$data;
+		if($data==0)
+		{
+			$user_message['pet']="";
+		}
+		else
+		{
+			$user_message['pet']=$data;
+		}
 		$json= json_encode($user_message);
 		echo $json;
  	}

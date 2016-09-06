@@ -1,5 +1,6 @@
 <?php
   //本文件用于上传照片、修改照片
+  //上传至七牛云的yangyang里
 	include_once('../mysql/connect.php');
 	include_once('../mysql/lib/mysql-fun.php');
 	//上传至云所需要
@@ -69,7 +70,7 @@
 				  	$token = $auth->uploadToken($bucket);
 				  	$uploadMgr = new UploadManager();
 				  	$filename = $name;
-				  	$uploadMgr->putFile($token,$filename,'D:/xampp/htdocs/Pets-Love/back-end/user/img/'.$name);
+				  	$uploadMgr->putFile($token,$filename,'C:/xampp/htdocs/Pets-Love/back-end/user/img/'.$name);
 				  	$Outside_the_chain='http://ob22j2b3f.bkt.clouddn.com/'.$filename;
 					update('host','h_photo',$Outside_the_chain,'h_secret_key',$h_secret_key);
                 	// echo "<center>您的文件已经上传完毕 上传图片预览: </center><br><center><img src='$uploadfile'></center>";
