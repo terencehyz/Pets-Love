@@ -5,10 +5,10 @@
 	//用户关注的人
 	$userid = $_GET['h_id'];
 	$sql = mysql_query(" select h_id from follower where h_follower = '$userid'");
-	while ($row = mysql_fetch_array($sql)) {
+	while ($row = mysql_fetch_assoc($sql)) {
 		# code...
-		$sqll = mysql_query(" select h_account,h_location,h_photo from host where id = $row[h_id]");
-		while ($roww = mysql_fetch_array($sqll)) {
+		$sqll = mysql_query(" select id,h_account,h_location,h_photo from host where id = $row[h_id]");
+		while ($roww = mysql_fetch_assoc($sqll)) {
 			$message[]=$roww;
 		}
 	}
