@@ -5,31 +5,37 @@
 	$user_id=$_GET['h_id']; 
 	$h_follower=$_GET['follow'];
 	//查重
-	$check_sql="select * from follower where h_id='$user_id'";
+	$check_sql="select * from follower where h_follower='$user_id'";
 	$query=mysql_query($check_sql);
 	while($row=mysql_fetch_assoc($query))
 	{
 		$message[]=$row;
 	}
-	$length=count($message);
-	for ($i=0; $i<$length ; $i++) { 
-		if($message[$i]['h_follower']==$h_follower)
-		{
-			$json=json_encode(0);
-			echo $json;
-			return ;
+	if(!empty($message))
+	{
+		$length=count($message);
+		for ($i=0; $i<$length ; $i++) { 
+			if($message[$i]['h_id']==$h_follower)
+			{
+				$json['judge']=0;
+				$return=json_encode($json);
+				echo $return;
+				return ;
+			}
 		}
 	}
 	//插入
-	$sql="insert into follower values ('','$user_id','$h_follower')";
+	$sql="insert into follower values ('','$h_follower','$user_id')";
 	if(mysql_query($sql)==1)
 	{
-		$json=json_encode(1);
-		echo $json;
+		$json['judge']=1;
+		$return=json_encode($json);
+		echo $return;
 	}
 	else
 	{
-		$json=json_encode(0);
-		echo $json;
+		$json['judge']=0;
+		$return=json_encode($json);
+		echo $return;
 	}
 ?>

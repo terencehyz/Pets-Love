@@ -12,7 +12,14 @@
 			$message[]=$roww;
 		}
 	}
-	$b = json_encode($message);
-	echo $b;
+	if(!empty($message))
+	{
+		$b = json_encode($message);
+		echo ($b);
+		return ;
+	}
+	$json['judge']=0;
+	$return=json_encode($json);
+	echo $return;
 	mysql_close($con);
 ?>
