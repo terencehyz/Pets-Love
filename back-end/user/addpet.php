@@ -2,7 +2,7 @@
 	require_once('../mysql/connect.php');
 	require_once('../mysql/lib/mysql-fun.php');
 	//前端传来用户的信息
-	$new['p_name']="小小A";
+	$new['p_name']="小A";
 	$new['p_sex']="雄性";
 	$new['p_type']="狗";
 	$new['p_age']="三个月";
