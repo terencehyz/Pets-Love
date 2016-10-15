@@ -7,6 +7,7 @@
 	{
 		$message[]=$row;
 	}
+<<<<<<< HEAD
 	for($i = 0;$i<count($message);$i++)
 	{
 		$j=$i+1;
@@ -14,5 +15,8 @@
 		$json["$url"]=$message[$i]['photoUrl'];
 	}
 	$json=json_encode($json);
+=======
+	$json=json_encode($message);
+>>>>>>> origin/master
 	echo $json;
 ?>

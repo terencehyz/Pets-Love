@@ -27,7 +27,11 @@
 			//向前端传回用户的所有宠物信息
 			// $json=json_encode($pets_message);
 			$pets_message['judge']=1;
+<<<<<<< HEAD
 			echo json_encode($pets_message);
+=======
+			return $pets_message;
+>>>>>>> origin/master
 		}
 	//}
 ?>

@@ -44,14 +44,22 @@
 		// $return ['h_photo']=$user_message['h_photo'];
 		// $return ['id']=$user_message['id'];
 		$user_message['judge']=1;
+<<<<<<< HEAD
 		/*if($data==0)
+=======
+		if($data==0)
+>>>>>>> origin/master
 		{
 			$user_message['pet']="";
 		}
 		else
 		{
 			$user_message['pet']=$data;
+<<<<<<< HEAD
 		}*/
+=======
+		}
+>>>>>>> origin/master
 		$json= json_encode($user_message);
 		echo $json;
  	}

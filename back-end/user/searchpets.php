@@ -3,7 +3,11 @@
 	require_once('../mysql/connect.php');
 	require_once('../mysql/lib/mysql-fun.php');
 	//$message由前端传来的搜索关键字
+<<<<<<< HEAD
 	$message=$_GET['message'];
+=======
+	$message=A;//$_GET['message'];
+>>>>>>> origin/master
 	$sql="select * from pet where p_name like '%$message%' or p_type like '%$message%' or p_age like '%$message%' or p_about like '%$message%'";
 	//echo $sql;
 	$query=mysql_query($sql);

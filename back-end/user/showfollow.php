@@ -9,12 +9,19 @@
 		# code...
 		$sqll = mysql_query(" select id,h_account,h_location,h_photo from host where id = $row[h_follower]");
 		while ($roww = mysql_fetch_assoc($sqll)) {
+<<<<<<< HEAD
 			$message['host'][]=$roww;
+=======
+			$message[]=$roww;
+>>>>>>> origin/master
 		}
 	}
 	if(!empty($message))
 	{
+<<<<<<< HEAD
 		$message['judge']=1;
+=======
+>>>>>>> origin/master
 		$b = json_encode($message);
 		echo ($b);
 		return ;
