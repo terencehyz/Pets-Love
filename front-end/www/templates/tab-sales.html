@@ -1,5 +1,19 @@
 <ion-view view-title="发现">
+  <ion-nav-buttons side="right">
+    <a class="button button-clear" ng-click="getLocation()">
+      <span class="icon ion-location"></span>
+    </a>
+  </ion-nav-buttons>
   <ion-content>
+
+    <div class="list">
+      <a class="item item-thumbnail-left" href="#/tab/sales/?id={{$index}}" ng-repeat="petNear in allNearPet">
+        <img ng-src="{{petNear.host.h_photo}}">
+        <h2>{{petNear.host.h_account}}</h2>
+        <p>相距: {{petNear.host.distance}} km</p>
+        <p>性别: {{petNear.host.h_sex}}</p>
+      </a>
+    </div>
 
   </ion-content>
 </ion-view>

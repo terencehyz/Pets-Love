@@ -1,9 +1,97 @@
 angular.module('starter.controllers', [])
-/*主页*/
-.controller('DashCtrl', function($scope) {
+.controller('ReleaseCtrl',function ($scope, $state, Pets) {
+  Pets.allPets($scope);
+  $scope.toAddPet = function () {
+    $state.go('tab.addPet');
+  };
 
 })
-/*忘记密码1-3*/
+.controller('DashCtrl', function($scope,$rootScope,$state,$ionicPopup,backEndInfo,Pets,myFollower,myFollowing) {
+
+  Pets.recommendPet($scope);
+  backEndInfo.allSlide($rootScope);
+  $scope.toSearch=function () {
+    $state.go('tab.search');
+  };
+  $scope.toFollow=function (myfollower) {
+    myFollower.toMyFollower2(myfollower).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '关注失败',
+          template: '您已关注此用户'
+        });
+      }
+    })
+  };
+  $scope.unFollow=function (myfollow) {
+    myFollowing.delMyFollowing2(myfollow).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '取消关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '失败',
+          template: '您已取消关注此用户'
+        });
+      }
+    })
+  };
+})
+.controller('SearchCtrl',function ($ionicLoading,$scope,$ionicPopup,Pets) {
+  $scope.userSearch=function (toGetPet) {
+    if(toGetPet){
+      Pets.searchPet(toGetPet,$scope).then(function (data) {
+        if(data.judge==0){
+          var alertPopup = $ionicPopup.alert({
+            title: '搜索失败',
+            template: '宝宝没有搜到，换个关键词吧'
+          });
+        }
+      })
+    }
+  }
+})
+.controller('SearchDetailCtrl',function ($scope,$location,$ionicPopup,myFollowing,myFollower) {
+  $scope.data=JSON.parse(localStorage.mySearchPet)[$location.search().id];
+  console.log(localStorage.mySearchPet);
+  $scope.toFollow=function (myfollower) {
+    myFollower.toMyFollower2(myfollower).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '关注失败',
+          template: '您已关注此用户'
+        });
+      }
+    })
+  };
+  $scope.unFollow=function (myfollow) {
+    myFollowing.delMyFollowing2(myfollow).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '取消关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '失败',
+          template: '您已取消关注此用户'
+        });
+      }
+    })
+  };
+})
 .controller('forget1',function($scope,$state,$ionicPopup,AccountService){
   $scope.data={
     youxiang:''
@@ -76,7 +164,6 @@ angular.module('starter.controllers', [])
 })
 .controller('ForgetPwdCtrl',function ($scope,$state,AccountService) {
 })
-/*登陆*/
 .controller('LoginCtrl',function ($scope,  $ionicPopup, $state, $ionicLoading, $window, $ionicPlatform,AccountService) {
   //自动跳转到主页
   if(localStorage.haslogin==1)
@@ -115,7 +202,6 @@ angular.module('starter.controllers', [])
     })
   }
 })
-/*注册*/
 .controller('CreateAccountCtrl',function ($scope, $state, $ionicPopup,$ionicLoading,AccountService) {
 
   $scope.data={};
@@ -205,141 +291,391 @@ angular.module('starter.controllers', [])
     $state.go('tab.dash');
   };
 })
-/*聊天*/
 .controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
 })
-/*聊天详细*/
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
-
-.controller('SalesCtrl',function ($scope) {
-
-})
-
-.controller('ReleaseCtrl',function ($scope, $state, Pets) {
-
-  $scope.pets = Pets.allPets();
-
-  $scope.addPet = function () {
-    $state.go('tab.petDetail', {});
-  }
-
-})
-
-/*宠物详情or添加新宠物*/
-.controller('petDetailCtrl',function ($scope, $state, $stateParams, Pets) {
-  $scope.DelButtonShow = false;
-
-  //获取记录详情
-  var petId = $stateParams.petId;
-  var pets = Pets.allPets();
-
-  //根据petId值，判断是编辑还是添加
-  if (petId) {
-
-    $scope.pet = pets[petId];
-    $scope.petId = petId;
-    $scope.DelButtonShow = true;
-
-    $scope.savePet = function () {
-
-      pets[petId] = $scope.pet;
-      Pets.save(pets);
-      $state.go('tab.release', { });
-    }
-
-  } else {
-    $scope.pet = Pets.newPet();
-    $scope.savePet = function () {
-      pets.push($scope.pet);
-      Pets.save(pets);
-      $state.go('tab.release', { });
-    }
-  }
-
-  //删除宠物
-  $scope.delPet = function (petId) {
-
-    pets.splice(petId, 1);
-    Pets.save(pets);
-    $state.go('tab.release', { });
+.controller('NearDetailCtrl',function($scope,$location,$ionicPopup,myFollower,myFollowing){
+  $scope.data=JSON.parse(localStorage.nearUsers)[$location.search().id];
+  $scope.toFollow=function (myfollower) {
+    myFollower.toMyFollower2(myfollower).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '关注失败',
+          template: '您已关注此用户'
+        });
+      }
+    })
+  };
+  $scope.unFollow=function (myfollow) {
+    myFollowing.delMyFollowing2(myfollow).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '取消关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '失败',
+          template: '您已取消关注此用户'
+        });
+      }
+    })
   };
 })
-/*账户*/
-.controller('AccountCtrl', function($scope,$state,$ionicPopup,userDetailInformation) {
+.controller('SalesCtrl',function ($scope,$rootScope,$ionicPopup,$ionicLoading,Pets) {
+  $rootScope.location={
+    Lng:'',
+    Lnt:''
+  };
 
-  console.log(localStorage);
+  /////高德
+  var map, geolocation;
+  map = new AMap.Map('container', {
+    resizeEnable: true
+  });
+  map.plugin('AMap.Geolocation', function() {
+    geolocation = new AMap.Geolocation({
+      enableHighAccuracy: true,//是否使用高精度定位，默认:true
+      timeout: 5000,           //超过5秒后停止定位，默认：无穷大
+      maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+      convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+      showButton: true,        //显示定位按钮，默认：true
+      buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+      buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+      showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+      showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+      panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+      zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    });
+    map.addControl(geolocation);
+    geolocation.getCurrentPosition();
+    AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+    AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+  });
+  //解析定位结果
+  function onComplete(data) {
+    $rootScope.location.Lng = data.position.getLng();
+    $rootScope.location.Lat = data.position.getLat();
+    $rootScope.$apply();
+    nearPetSearch($rootScope.location.Lng,$rootScope.location.Lat);
+  }
+  //解析定位错误信息
+  function onError(data) {
+    $rootScope.$apply();
+  }
+  //获取附近宠物
+  function nearPetSearch(dataLng,dataLat){
+    localStorage.hasPop=1;
+    console.log(dataLng,dataLat);
+    Pets.nearPet($scope,dataLng,dataLat);
+  }
+  ///
 
+  $scope.getLocation=function () {
+    //高德
+    var map, geolocation;
+    map = new AMap.Map('container', {
+      resizeEnable: true
+    });
+    map.plugin('AMap.Geolocation', function() {
+      geolocation = new AMap.Geolocation({
+        enableHighAccuracy: true,//是否使用高精度定位，默认:true
+        timeout: 5000,           //超过5秒后停止定位，默认：无穷大
+        maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+        convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+        showButton: true,        //显示定位按钮，默认：true
+        buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+        buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+        showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+        showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+        panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+        zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+      });
+      map.addControl(geolocation);
+      geolocation.getCurrentPosition();
+      AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+      AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    });
+    //解析定位结果
+    function onComplete(data) {
+      $rootScope.location.Lng = data.position.getLng();
+      $rootScope.location.Lat = data.position.getLat();
+      $rootScope.$apply();
+      nearPetSearch($rootScope.location.Lng,$rootScope.location.Lat);
+    }
+    //解析定位错误信息
+    function onError(data) {
+      $rootScope.$apply();
+    }
+    //获取附近宠物
+    function nearPetSearch(dataLng,dataLat){
+      localStorage.hasPop=1;
+      console.log(dataLng,dataLat);
+      Pets.nearPet($scope,dataLng,dataLat);
+    }
+  };
+})
+.controller('petDetailCtrl',function ($scope, $state, $stateParams, $ionicPopup, $ionicActionSheet,Pets,$location,Camera) {
+  $scope.data=JSON.parse(localStorage.myPets)[$location.search().id];
+  $scope.delPet=function (pet) {
+    Pets.delPet(pet).then(function (data) {
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '删除成功',
+          template: '成功删除宠物'
+        });
+        $state.go('tab.release');
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '删除失败',
+          template: '发生错误'
+        });
+      }
+    })
+  };
+  $scope.savePet=function (pet) {
+    if($scope.data.p_name==undefined||$scope.data.p_name==''){
+      var alertPopup = $ionicPopup.alert({
+        title: '宠物名不合法',
+        template: '请确认宠物名不为空！'
+      });
+    }else if($scope.data.p_age==undefined||$scope.data.p_age==''){
+      var alertPopup = $ionicPopup.alert({
+        title: '宠物年龄合法',
+        template: '请确认宠物年龄不为空！'
+      });
+    }else if($scope.data.p_about==undefined||$scope.data.p_about==''){
+      var alertPopup = $ionicPopup.alert({
+        title: '宠物介绍不合法',
+        template: '请确认宠物介绍不为空！'
+      });
+    }else{
+      Pets.update(pet).then(function (data) {
+        if(data.judge==1){
+          var alertPopup = $ionicPopup.alert({
+            title: '成功',
+            template: '成功修改宠物信息！'
+          });
+          $state.go('tab.release');
+        }else{
+          var alertPopup = $ionicPopup.alert({
+            title: '失败',
+            template: '发生错误！'
+          });
+        }
+      })
+    }
+  };
+  $scope.me={
+    image:''
+  };
+  $scope.choosePicMenu = function() {
+    var type = 'gallery';
+    $ionicActionSheet.show({
+      buttons: [
+        { text: '&nbsp;拍照' },
+        { text: '&nbsp;从相册选择' }
+      ],
+      titleText: '选择照片',
+      cancelText: '取消',
+      cancel: function() {
+      },
+      buttonClicked: function(index) {
+        if(index == 0){
+          type = 'camera';
+        }else if(index == 1){
+          type = 'gallery';
+        }
+        //Camera.getPicture(type)->根据选择的“选取图片”的方式进行选取
+        Camera.getPicture(type).then(
+          //返回一个imageURI，记录了照片的路径
+          function (imageURI) {
+            console.log(imageURI);
+            $scope.me.image = imageURI;
+            $scope.$apply();
+          },
+          function (err) {
+          });
+        return true;
+      }
+    });
+  };
+
+  var  options= new FileUploadOptions();
+  options.fileKey="ffile";
+  options.fileName=$scope.me.image.substr($scope.me.image.lastIndexOf('/')+1);
+  options.mimeType="image/jpeg";
+  //用params保存其他参数，例如昵称，年龄之类
+  var params = {};
+  params['name'] = $scope.me.name;
+  //把params添加到options的params中
+  options.params = params;
+  //新建FileTransfer对象
+  var ft = new FileTransfer();
+  //上传文件
+  ft.upload(
+    $scope.me.image,
+    encodeURI('some url'),//把图片及其他参数发送到这个URL，相当于一个请求，在后台接收图片及其他参数然后处理
+    uploadSuccess,
+    uploadError,
+    options);
+  //upload成功的话
+  function uploadSuccess(r) {
+    var resp = JSON.parse(r.response);
+    if(resp.status == 0){
+      $ionicPopup.alert({
+        title: '成功',
+        cssClass: 'alert-text',
+        template:  '上传成功'
+      });
+      //返回前一页面
+      //$navHistoryback();
+    }else{
+      $ionicPopup.alert({
+        title: '失败',
+        cssClass: 'alert-text',
+        template:  '上传失败'
+      });
+    }
+  }
+//upload失败的话
+  function uploadError(error) {
+  }
+
+  $scope.petTypeDetail=["猫","狗","龙猫","仓鼠","鱼","虾","松鼠","鸟","豚鼠","龟","兔","蛇","其他"];
+  $scope.petType=["猫","狗","龙猫","仓鼠","鱼","虾","松鼠","鸟","豚鼠","龟","兔","蛇","其他"];
+  $scope.petGender=["雌性","雄性"];
+})
+.controller('addPetCtrl',function ($scope, $state, $stateParams, $ionicPopup, Pets) {
+  $scope.pet={
+    age:'',
+    name:'',
+    about:''
+  };
+  $scope.petTypeDetail=["猫","狗","龙猫","仓鼠","鱼","虾","松鼠","鸟","豚鼠","龟","兔","蛇","其他"];
+  $scope.petType=["猫","狗","龙猫","仓鼠","鱼","虾","松鼠","鸟","豚鼠","龟","兔","蛇","其他"];
+  $scope.petGender=["雌性","雄性"];
+  $scope.addPet=function () {
+    console.log($scope.pet);
+    Pets.newPet($scope.pet).then(function (data) {
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '添加成功',
+          template: '成功添加宠物'
+        });
+        $state.go('tab.release');
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '添加失败',
+          template: '此宠物已存在'
+        });
+        $state.go('tab.release');
+      }
+    })
+  };
+})
+.controller('AccountCtrl', function($scope,$state,$ionicPopup) {
   if(localStorage.haslogin==1){
     $scope.more="#/tab/account/userProfile";
   }
   else{
     $scope.more="#/login";
   }
-
-  $scope.userInfo=userDetailInformation.pluser();
+  $scope.userInfo={
+    photo:localStorage.photo,
+    id:localStorage.id,
+    email:localStorage.mail,
+    phone:localStorage.phone,
+    sex:localStorage.sex,
+    account:localStorage.account
+  };
 
   $scope.logout = function() {
-    localStorage.sex="";
+    localStorage.clear();
     localStorage.haslogin=0;
-    localStorage.secretKey = "";
-    localStorage.mail = "";
-    localStorage.account = "";
-    localStorage.phone = "";
-    localStorage.photo = "";
-    localStorage.pets = "";
-    localStorage.password="";
-
+    localStorage.hasPop=0;
     console.log(localStorage);
-
     $state.go("login");
   }
 
 })
-
-/*设置*/
 .controller('MySettingsCtrl',function ($scope) {
-
+  $scope.userInfo={
+    photo:localStorage.photo,
+    account:localStorage.account,
+    email:localStorage.mail,
+    phone:localStorage.phone,
+    sex:localStorage.sex
+  };
 })
-/*关注的人*/
-.controller('myFollowingCtrl',function ($scope,$state) {
-  /*$scope.find=function () {
-    $state.go('forget-password.re');
-  }*/
-
+.controller('myFollowingCtrl',function ($scope,$state,$ionicPopup,myFollowing) {
+  myFollowing.all($scope);
+  $scope.remove=function (myfollow) {
+    myFollowing.delMyFollowing($scope.following,myfollow).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '取消关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '失败',
+          template: '您已取消关注此用户'
+        });
+      }
+    })
+  };
 })
-/*我的粉丝*/
-.controller('myFollowerCtrl',function ($scope) {
-
+.controller('myFollowerCtrl',function ($scope,$ionicPopup,myFollower) {
+  myFollower.all($scope);
+  $scope.tofollow=function (myfollower) {
+    myFollower.toMyFollower(myfollower).then(function(data){
+      if(data.judge==1){
+        var alertPopup = $ionicPopup.alert({
+          title: '成功',
+          template: '关注成功'
+        });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: '关注失败',
+          template: '您已关注此用户'
+        });
+      }
+    })
+  };
 })
-/*关于我们*/
 .controller('aboutUsCtrl',function ($scope) {
 
 })
-/*用户详情*/
-.controller('userProfileCtrl',function ($scope,$stateParams,$ionicPopup,$ionicLoading,userDetailInformation,AccountService) {
+.controller('userProfileCtrl',function ($scope,$stateParams,$ionicPopup,$ionicLoading,AccountService) {
+  $scope.userInfo={
+    photo:localStorage.photo,
+    account:localStorage.account,
+    id:localStorage.id,
+    email:localStorage.mail,
+    phone:localStorage.phone,
+    sex:localStorage.sex
+  };
 
-  $scope.userInfo = userDetailInformation.pluser();
+  $scope.modifyPhoto=function () {
 
-  console.log(JSON.stringify(userDetailInformation.pluser()));
+  };
 
   $scope.saveInfo=function (userInfo) {
 
     if(checkMail(userInfo.email)){
-      if(userInfo.id==undefined||userInfo.id=='') {
+      if(userInfo.account==undefined||userInfo.id=='') {
         var alertPopup = $ionicPopup.alert({
           title: '昵称错误',
           template: '昵称不能为空！'
@@ -359,6 +695,10 @@ angular.module('starter.controllers', [])
           AccountService.modify(userInfo).then(function(data){
             $ionicLoading.hide();
             if(data.judge==1){
+              localStorage.account=userInfo.account;
+              localStorage.sex=userInfo.sex;
+              localStorage.phone=userInfo.phone;
+              console.log(localStorage);
               var alertPopup=$ionicPopup.alert({
                 title:'已保存',
                 template:'个人信息已更新！'
@@ -391,25 +731,4 @@ angular.module('starter.controllers', [])
   }
 
 })
-/*首页轮播*/
-.controller('HouseCtrl', function($scope, $ionicSlideBoxDelegate) {
-  //为了验证属性active-slide定义的模型，angularjs是mvc模式
-  $scope.model = {
-    activeIndex:0
-  };
 
-//此事件对应的是pager-click属性，当显示图片是有对应数量的小圆点，这是小圆点的点击事件
-  $scope.pageClick = function(index){
-    //alert(index);
-
-    $scope.model.activeIndex = 2;
-  };
-
-//当图片切换后，触发此事件，注意参数
-  $scope.slideHasChanged = function($index){
-    //alert($index);
-
-  };
-  //这是属性delegate-handle的验证使用的，其实没必要重定义，直接使用$ionicSlideBoxDelegate就可以
-  $scope.delegateHandle = $ionicSlideBoxDelegate;
-});

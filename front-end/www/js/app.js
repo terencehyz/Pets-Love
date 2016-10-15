@@ -4,6 +4,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+  console.log(FileTransfer);
+}
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','starter.filters'])
 
 
@@ -44,119 +48,100 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
   $stateProvider
     /*登陆*/
   .state('login',{
-      url:'/login',
-      templateUrl:'templates/login.html',
-      controller:'LoginCtrl'
-    })
-
-    /*注册*/
-    .state('create-account',{
-      url:'/create-account',
-      templateUrl:'templates/create-account.html',
-      controller: 'CreateAccountCtrl'
-    })
-
-    /*用户资料*/
-    .state('tab.userProfile', {
-      url: '/account/userProfile',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/userProfile.html',
-          controller: 'userProfileCtrl'
-        }
+    url:'/login',
+    templateUrl:'templates/login.html',
+    controller:'LoginCtrl'
+  })
+  .state('create-account',{
+    url:'/create-account',
+    templateUrl:'templates/create-account.html',
+    controller: 'CreateAccountCtrl'
+  })
+  .state('tab.userProfile', {
+    url: '/account/userProfile',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/userProfile.html',
+        controller: 'userProfileCtrl'
       }
-    })
-
-    /*关于我们*/
-    .state('tab.aboutus', {
-      url: '/account/aboutus',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/aboutus.html',
-          controller: 'aboutUsCtrl'
-        }
+    }
+  })
+  .state('tab.aboutus', {
+    url: '/account/aboutus',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/aboutus.html',
+        controller: 'aboutUsCtrl'
       }
-    })
-
-    /*粉丝*/
-    .state('tab.myFollower', {
-      url: '/account/myFollower',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/myFollower.html',
-          controller: 'myFollowerCtrl'
-        }
+    }
+  })
+  .state('tab.myFollower', {
+    url: '/account/myFollower',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/myFollower.html',
+        controller: 'myFollowerCtrl'
       }
-    })
-
-     /*关注*/
-    .state('tab.myFollowing', {
-      url: '/account/myFollowing',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/myFollowing.html',
-          controller: 'myFollowingCtrl'
-        }
+    }
+  })
+  .state('tab.myFollowing', {
+    url: '/account/myFollowing',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/myFollowing.html',
+        controller: 'myFollowingCtrl'
       }
-    })
-
-    /*设置*/
-    .state('tab.mysettings', {
-      url: '/account/mysettings',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/mysettings.html',
-          controller: 'MySettingsCtrl'
-        }
+    }
+  })
+  .state('tab.mysettings', {
+    url: '/account/mysettings',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/mysettings.html',
+        controller: 'MySettingsCtrl'
       }
-    })
-
-    /*忘记密码*/
-    .state('forget-password',{
-      url:'/forget-password',
-      templateUrl:'templates/ForgetPassword.html',
-      controller: 'ForgetPwdCtrl'
-    })
-
-    .state('forget-password.email',{
-      url:'/forget-password-email',
-      views:{
-        'forget-password-email':{
-          templateUrl:'templates/ForgetPassword-email.html',
-          controller:'forget1'
-        }
+    }
+  })
+  .state('forget-password',{
+    url:'/forget-password',
+    templateUrl:'templates/ForgetPassword.html',
+    controller: 'ForgetPwdCtrl'
+  })
+  .state('forget-password.email',{
+    url:'/forget-password-email',
+    views:{
+      'forget-password-email':{
+        templateUrl:'templates/ForgetPassword-email.html',
+        controller:'forget1'
       }
-    })
-
-    .state('forget-password.code',{
-      url:'/forget-password-code',
-      views:{
-        'forget-password-code':{
-          templateUrl:'templates/ForgetPassword-code.html',
-          controller:'forget2'
-        }
+    }
+  })
+  .state('forget-password.code',{
+    url:'/forget-password-code',
+    views:{
+      'forget-password-code':{
+        templateUrl:'templates/ForgetPassword-code.html',
+        controller:'forget2'
       }
-    })
-
-    .state('forget-password.re',{
-      url:'/forget-password-re',
-      views:{
-        'forget-password-re':{
-          templateUrl:'templates/ForgetPassword-re.html',
-          controller:'forget3'
-        }
+    }
+  })
+  .state('forget-password.re',{
+    url:'/forget-password-re',
+    views:{
+      'forget-password-re':{
+        templateUrl:'templates/ForgetPassword-re.html',
+        controller:'forget3'
       }
-    })
+    }
+  })
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
   })
-
-  // Each tab has its own nav history stack:
-
   .state('tab.dash', {
+    cache:false,
     url: '/dash',
     views: {
       'tab-dash': {
@@ -165,7 +150,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       }
     }
   })
-
+  .state('tab.search',{
+    cache:false,
+    url:'/search',
+    views:{
+      'tab-dash':{
+        templateUrl:'templates/tab-search.html',
+        controller:'SearchCtrl'
+      }
+    }
+  })
+  .state('tab.searchDetail',{
+    cache:false,
+    url:'/searchDetail/:searchId',
+    views:{
+      'tab-dash':{
+        templateUrl:'templates/searchDetail.html',
+        controller:'SearchDetailCtrl'
+      }
+    }
+  })
   .state('tab.chats', {
       url: '/chats',
       views: {
@@ -184,8 +188,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
         }
       }
     })
-
   .state('tab.sales', {
+    //cache:false,
     url: '/sales',
     views: {
       'tab-sales': {
@@ -194,7 +198,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       }
     }
   })
-/*宠物列表*/
+  .state('tab.nearDetail',{
+    url:'/sales/:nearId',
+    views:{
+      'tab-sales':{
+        templateUrl:'templates/nearDetail.html',
+        controller:'NearDetailCtrl'
+      }
+    }
+  })
   .state('tab.release',{
      cache:false,
      url:'/release',
@@ -205,17 +217,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
        }
      }
    })
-/*宠物详情*/
   .state('tab.petDetail',{
-      url:'/petDetail/:petId',
-      views:{
-        'tab-release':{
-          templateUrl:'templates/petDetail.html',
-          controller:'petDetailCtrl'
-        }
+    url:'/petDetail/:petId',
+    views:{
+      'tab-release':{
+        templateUrl:'templates/petDetail.html',
+        controller:'petDetailCtrl'
       }
-    })
-
+    }
+  })
+  .state('tab.addPet',{
+    cache:false,
+    url:'/addPet',
+    views:{
+      'tab-release':{
+        templateUrl:'templates/addPet.html',
+        controller:'addPetCtrl'
+      }
+    }
+  })
   .state('tab.account', {
     cache:false,
     url: '/account',
@@ -226,7 +246,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
       }
     }
   });
-
   $urlRouterProvider.otherwise('/login');
 
 });

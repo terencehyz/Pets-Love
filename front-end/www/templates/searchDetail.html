@@ -1,0 +1,51 @@
+<ion-view title="宠物信息">
+  <ion-nav-buttons side="right">
+    <a class="button button-clear" ng-click="savePet(data)"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-slide-box does-continue="true" auto-play="true" show-pager="ture">
+      <ion-slide ng-repeat="slide in data.p_imgs">
+        <img src="{{slide}}" height="200px" width="100%">
+      </ion-slide>
+    </ion-slide-box>
+    <div class="list card">
+      <ion-item class="item item-icon-left">
+        <i class="icon ion-ios-paw"></i>
+        基本资料
+        <h2>{{data.p_name}}</h2>
+        <p>{{data.p_sex}}&nbsp;&nbsp;{{data.p_type}}&nbsp;&nbsp;{{data.p_detail_type}}</p>
+      </ion-item>
+      <ion-item class="item item-icon-left">
+        <i class="icon ion-ios-paper"></i>
+        介绍<p>{{data.p_about}}</p>
+      </ion-item>
+    </div>
+    <div class="list card">
+      <ion-item class="item item-avatar">
+        <img ng-src="{{data.host.h_photo}}">
+        <div class="row">
+          <div class="col-60">
+            <h2>{{data.host.h_account}}</h2>
+            <p>{{data.host.h_sex}}&nbsp;&nbsp;&nbsp;{{data.host.h_location}}</p>
+          </div>
+          <div class="col-40">
+            <i class="icon ion-ios-person button button-light" ng-click="toFollow(data.host.id)"></i>
+            <i class="icon ion-ios-person-outline button button-light" ng-click="unFollow(data.host.id)"></i>
+          </div>
+        </div>
+      </ion-item>
+      <a href="tel:{{data.host.h_call}}" class="item item-icon-left">
+        <i class="icon ion-ios-telephone"></i>
+        电话<p>{{data.host.h_call}}</p>
+      </a>
+      <a href="sms:{{data.host.h_call}}" class="item item-icon-left">
+        <i class="icon ion-chatbox-working"></i>
+        短信<p>{{data.host.h_call}}</p>
+      </a>
+      <a href="mailto:{{data.host.h_email}}" class="item item-icon-left">
+        <i class="icon ion-ios-email"></i>
+        邮箱<p>{{data.host.h_email}}</p>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,46 +1,42 @@
-<ion-view title="宠物" ng-controller="petDetailCtrl">
+<ion-view title="宠物信息">
   <ion-nav-buttons side="right">
-    <a class="button button-clear" ng-click="savePet()"> 保存 </a>
+    <a class="button button-clear" ng-click="savePet(data)"> 保存 </a>
   </ion-nav-buttons>
   <!--<ion-content has-header="true">-->
   <ion-content>
     <div class="list">
       <ion-item class="item item-input">
         <div class="input-label">宠物昵称</div>
-        <input type="text" ng-model="pet.name">
+        <input type="text" ng-model="data.p_name">
       </ion-item>
-
-      <!--
-
       <ion-item class="item item-input item-select">
         <div class="input-label"> 宠物类别 </div>
-        <select ng-model="pet.type" ng-options="category.id as category.title for category in categories"></select>
+        <select ng-model="data.p_type" ng-options="x for x in petTypeDetail"></select>
       </ion-item>
-
       <ion-item class="item item-input item-select">
         <div class="input-label"> 宠物品种 </div>
-        <select ng-model="pet.typeDetail" ng-options="category.id as category.title for category in categories"></select>
+        <select ng-model="data.p_detail_type" ng-options="y for y in petType"></select>
       </ion-item>
-
       <ion-item class="item item-input item-select">
         <div class="input-label"> 性别 </div>
-        <select ng-model="pet.sex" ng-options="category.id as category.title for category in categories"></select>
+        <select ng-model="data.p_sex" ng-options="z for z in petGender"></select>
       </ion-item>
--->
       <ion-item class="item item-input">
         <div class="input-label"> 年龄 </div>
-        <input type="text" ng-model="pet.age">
+        <input type="text" ng-model="data.p_age">
       </ion-item>
-
       <ion-item class="item item-input">
         <span class="input-label">简介</span>
-        <textarea rows="5" ng-model="pet.about"></textarea>
+        <textarea rows="5" ng-model="data.p_about"></textarea>
       </ion-item>
       <div class="item item-divider">萌宠照片</div>
-      <div class="item">照片列表</div>
-
       <div class="padding">
-        <button class="button button-block button-assertive" ng-show="DelButtonShow" ng-click="delPet({{petId}})"> 删除 </button>
+        <button class="button button-block button-positive" ng-click="choosePicMenu()">
+          选择照片
+        </button>
+        <button class="button button-block button-assertive" ng-click="delPet(data)">
+          删除
+        </button>
       </div>
     </div>
 

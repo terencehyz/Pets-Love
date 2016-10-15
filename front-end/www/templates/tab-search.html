@@ -1,0 +1,40 @@
+<ion-view view-title="萌宠筛选" style="background-color: #FF9800">
+  <ion-content>
+    <!--<h3 style="color: white; margin-top: 6%; margin-left: 5%">
+      <i class="icon ion-bookmark"></i>
+      萌宠筛选
+    </h3>-->
+
+    <div id="search-bar">
+      <div class="item item-input-inset" style="background-color: #FF9800;border: none">
+        <label class="item-input-wrapper" id="search-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="search" placeholder="Search" ng-model="toGetPet" autocorrect="off">
+        </label>
+        <button class="button button-stable button-small" ng-click="userSearch(toGetPet)">
+          搜索
+        </button>
+      </div>
+    </div>
+
+    <div class="list">
+
+      <a class="item item-thumbnail-left" href="#/tab/searchDetail/?id={{$index}}" ng-repeat="petSearch in allPetSearch" style="background-color: rgb(249,249,249)">
+        <img ng-src="{{petSearch.p_img}}">
+        <h2>
+          <span class="icon ion-ios-paw" style="color: #D35C1E"></span> {{petSearch.p_name}}
+        </h2>
+        <h3><span class="icon ion-ios-pulse-strong" style="color: #D35C1E"></span> {{petSearch.p_type}} {{petSearch.p_detail_type}}</h3>
+        <h3><span class="icon ion-eye" style="color: #D35C1E"></span> {{petSearch.p_age}}岁 {{petSearch.p_sex}}</h3>
+        <p><span class="icon ion-ios-nutrition" style="color: #D35C1E"></span> {{petSearch.p_about}}</p>
+        <!--<div class="item item-avatar">
+          <img ng-src="{{petSearch.h_photo}}">
+          <h2 style="margin-top: 0px;margin-bottom: 0px">主人 {{petSearch.host.h_account}}</h2>
+          <h2 style="margin-top: 0px;margin-bottom: 0px">电话 {{petSearch.host.h_call}}</h2>
+          <h2 style="margin-top: 0px;margin-bottom: 0px">邮箱 {{petSearch.host.h_email}}</h2>
+        </div>-->
+      </a>
+    </div>
+
+  </ion-content>
+</ion-view>

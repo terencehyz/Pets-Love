@@ -1,64 +1,92 @@
 angular.module('starter.services', [])
-  .factory('userDetailInformation',function () {
-
-    if(localStorage.haslogin==1)
-    {
-      if(localStorage.photo==undefined||localStorage.photo==''||localStorage.photo=="")
-      {
-        localStorage.photo="img/user.png";
-      }
-      var dataUser = {
-        sex:localStorage.sex,
-        id:localStorage.account,
-        email:localStorage.mail,
-        phone:localStorage.phone,
-        password:"",
-        photo:localStorage.photo,
-        secretKey:localStorage.secretKey,
-        pets:localStorage.pets,
-        location:{
-          x:"",
-          y:""
-        }
-      }
-    }
-    else{
-      var dataUser = {
-        sex:"",
-        id:"",
-        email:"",
-        phone:"",
-        password:"",
-        photo:"img/user.png",
-        secretKey:"",
-        pets:"",
-        location:{
-          x:"",
-          y:""
-        }
-      }
-    }
-    return{
-      pluser:function () {
-        return dataUser;
-      }
-    };
-  })
-  .factory('myFollowing',function () {
+  /*关注*/
+  .factory('myFollowing',function ($http,$q) {
     return{
       all:function ($scope) {
-        var d=$q.defer();
-        var promise=d.promise;
-        var url="http://183.175.12.168/Pets-Love/back-end/user/login.php?email="+email+"&password="+password+"&callback=JSON_CALLBACK";
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/showfollowing.php?h_id="+localStorage.keyId+"&callback=JSON_CALLBACK";//此处为得到的following
         $http.get(url)
-          .success(function (data) {
-
-          })
+          .success(function(res) {
+            if(res.judge==1){
+              $scope.following=res.host;
+            }else{
+              $scope.following='';
+            }
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      delMyFollowing:function(following,myfollow){
+        var deferred = $q.defer();
+        following.splice(following.indexOf(myfollow), 1);
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/delfollowing.php?h_id=" + localStorage.keyId +"&follow="+myfollow.id+ "&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      delMyFollowing2:function(myfollow){
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/delfollowing.php?h_id=" + localStorage.keyId +"&follow="+myfollow+ "&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            deferred.resolve(res);
+          });
+        return deferred.promise;
       }
     }
   })
-  .factory('myFollower',function () {
-
+  /*粉丝*/
+  .factory('myFollower',function ($http,$q) {
+    return{
+      all:function ($scope) {
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/showfollow.php?h_id="+localStorage.keyId+"&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            if(res.judge==1){
+              $scope.follower=res.host;
+            }else{
+              $scope.follower='';
+            }
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      toMyFollower:function (myfollower) {
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/addfollowing.php?h_id=" + localStorage.keyId +"&follow="+myfollower+ "&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      toMyFollower2:function (myfollower) {
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/addfollowing.php?h_id=" + localStorage.keyId +"&follow="+myfollower+ "&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      }
+    }
+  })
+  .factory('backEndInfo',function($http,$q){
+    return{
+     allSlide:function ($rootScope) {
+       var deferred = $q.defer();
+       var url = "http://119.29.37.225/Pets-Love/back-end/user/main_picture.php?callback=JSON_CALLBACK";
+       $http.get(url)
+         .success(function(res) {
+           $rootScope.slides=res;
+           deferred.resolve(res);
+         });
+       return deferred.promise;
+     }
+    }
   })
   .factory('Chats', function() {
     // Might use a resource here that returns a JSON array
@@ -108,46 +136,117 @@ angular.module('starter.services', [])
       }
     };
   })
-  .factory('Pets', function () {
+  .factory('Pets', function ($http,$q) {
+    return {
+      /*附近的宠物*/
+      nearPet:function ($scope,dataLng,dataLat) {
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/nearby.php?h_longtitude="+dataLng+"&h_latitude="+dataLat+"&h_secret_key="+localStorage.secretKey+"&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            $scope.allNearPet=res;
+            localStorage.nearUsers=JSON.stringify(res);
+            /*if(res.data==1){
+              $scope.allNearPet=res.data;
+              localStorage.nearUsers=JSON.stringify(res.data);
+            }else{
+              $scope.allNearPet=res.data;
+              localStorage.nearUsers='';
+            }*/
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      /*主页模糊搜索*/
+      searchPet:function (toGetPet,$scope) {
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/searchpets.php?message="+toGetPet+"&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            if(res.judge==1){
+              $scope.allPetSearch=res.pets;
+              localStorage.mySearchPet=JSON.stringify(res.pets);
+            }else{
+              $scope.allPetSearch='';
+            }
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      /*主页推荐宠物*/
+      recommendPet:function ($scope) {
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/WithRe.php?h_id="+localStorage.keyId+"&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            $scope.allPetRecommend=res;
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      allPets: function ($scope) {
+        var deferred = $q.defer();
+        var url="http://119.29.37.225/Pets-Love/back-end/user/showpet.php?h_id="+localStorage.keyId+"&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res){
+            localStorage.myPets=JSON.stringify(res.pets);
+            $scope.allPets=res.pets;
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      update: function (pet) {
+        var deferred = $q.defer();
+        var url="http://119.29.37.225/Pets-Love/back-end/user/changepets.php?p_name="+pet.p_name+"&p_sex="+pet.p_sex+"&host_id="+localStorage.keyId+"&id="+pet.id+"&p_type="+pet.p_type+"&p_age="+pet.p_age+"&p_about="+pet.p_about+"&p_detail_type="+pet.p_detail_type+"&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res){
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      newPet: function (pet) {
+        var deferred = $q.defer();
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/addpet.php?p_name=" + pet.name + "&p_sex=" + pet.sex + "&p_type="+pet.type+"&p_age="+pet.age+"&host_id="+localStorage.keyId+"&p_about="+pet.about+"&p_detail_type=" +pet.typeDetail+ "&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      },
+      delPet: function (pet) {
+        var deferred = $q.defer();
+        var url="http://119.29.37.225/Pets-Love/back-end/user/delpet.php?id="+pet.id+"&h_id="+localStorage.keyId+"&callback=JSON_CALLBACK";
+        $http.get(url)
+          .success(function(res) {
+            deferred.resolve(res);
+          });
+        return deferred.promise;
+      }
+    };
+  })
+  .factory('Camera', ['$q', function($q) {
 
-        return {
-          allPets: function () {
-            var petsString = window.localStorage['pets'];
-            if (petsString) {
-                var pets = angular.fromJson(petsString);
+    return {
+      getPicture: function(options) {
+        var q = $q.defer();
 
-                  return pets;
-              }
-            return [];
-          },
+        navigator.camera.getPicture(function(result) {
+          // Do any magic you need
+          q.resolve(result);
+        }, function(err) {
+          q.reject(err);
+        }, options);
 
-          save: function (pets) {
-            window.localStorage['pets'] = angular.toJson(pets);
-          },
-
-          //创建一个新的宠物
-
-              newPet: function () {
-            return {
-                //indexId:0,
-                type:'',
-                typeDetail:'',
-                name:'',
-                sex:'',
-                age:'',
-                id:'',
-                about:'',
-                url:''
-            };
-          }
-      };
-    })
+        return q.promise;
+      }
+    }
+  }])
   .service('AccountService',function ($http,$q) {
     return{
       register: function(email, name, password) {
         var deferred = $q.defer();
         password=hex_md5(password);
-        var url = "http://183.175.12.168/Pets-Love/back-end/user/register.php?email=" + email + "&username=" + name + "&password=" + password + "&callback=JSON_CALLBACK";
+        var url = "http://119.29.37.225/Pets-Love/back-end/user/register.php?email=" + email + "&username=" + name + "&password=" + password + "&callback=JSON_CALLBACK";
         $http.get(url)
           .success(function(res) {
             deferred.resolve(res);
@@ -160,25 +259,34 @@ angular.module('starter.services', [])
         var deferred = $q.defer();
         var promise = deferred.promise;
         var loginResult=new Object();
-        var url="http://183.175.12.168/Pets-Love/back-end/user/login.php?email="+email+"&password="+password+"&callback=JSON_CALLBACK";
+        var url="http://119.29.37.225/Pets-Love/back-end/user/login.php?email="+email+"&password="+password+"&h_latitude="+0+"&h_longitude="+0+"&callback=JSON_CALLBACK";
         $http.get(url)
           .success(function(response){
             loginResult=response;
+            localStorage.keyId=loginResult.id;
             localStorage.password=loginResult.h_password;
             localStorage.secretKey=loginResult.h_secret_key;
             localStorage.mail=loginResult.h_email;
             localStorage.account=loginResult.h_account;
             localStorage.phone=loginResult.h_call;
-            localStorage.photo=loginResult.h_photo;
+            if(loginResult.h_photo){
+              localStorage.photo=loginResult.h_photo;
+            }else{
+              localStorage.photo="../img/user.png";
+            }
             localStorage.sex=loginResult.h_sex;
-            localStorage.pets=loginResult.pets;
+            if(loginResult.judge==1){
+              localStorage.pets=loginResult.pet;
+            }else{
+              localStorage.pets='';
+            }
             deferred.resolve(loginResult);
           });
         return promise;
       },
       modify:function (userInfo) {
         var deferred = $q.defer();
-        var url="http://183.175.12.168/Pets-Love/back-end/user/changemessage.php?h_account="+ userInfo.id + "&h_secret_key=" + userInfo.secretKey+"&h_sex=" + userInfo.sex+ "&h_call=" + userInfo.phone + "&callback=JSON_CALLBACK";
+        var url="http://119.29.37.225/Pets-Love/back-end/user/changemessage.php?h_account="+ userInfo.account + "&h_secret_key=" + localStorage.secretKey+"&h_sex=" + userInfo.sex+ "&h_call=" + userInfo.phone + "&callback=JSON_CALLBACK";
         $http.get(url).success(function(res){
           deferred.resolve(res);
         });
@@ -186,7 +294,7 @@ angular.module('starter.services', [])
       },
       CodeMail:function(email){
         var deferred = $q.defer();
-        var url="http://183.175.12.168/Pets-Love/back-end/user/sendmail.php?h_email="+ email+ "&callback=JSON_CALLBACK";
+        var url="http://119.29.37.225/Pets-Love/back-end/user/sendmail.php?h_email="+ email+ "&callback=JSON_CALLBACK";
         $http.get(url).success(function(res){
           deferred.resolve(res);
         });
@@ -195,7 +303,7 @@ angular.module('starter.services', [])
       getCode:function (email) {
         console.log(email);
         var deferred = $q.defer();
-        var url="http://183.175.12.168/Pets-Love/back-end/user/judge-email.php?h_email="+ email+ "&callback=JSON_CALLBACK";
+        var url="http://119.29.37.225/Pets-Love/back-end/user/judge-email.php?h_email="+ email+ "&callback=JSON_CALLBACK";
         $http.get(url).success(function(res){
           deferred.resolve(res);
         });
@@ -205,7 +313,7 @@ angular.module('starter.services', [])
         var mail=localStorage.getItem("findPwd");
         console.log(mail);
         var deferred = $q.defer();
-        var url="http://183.175.12.168/Pets-Love/back-end/user/judgecaptcha.php?captcha="+ code + "&h_email=" + mail + "&callback=JSON_CALLBACK";
+        var url="http://119.29.37.225/Pets-Love/back-end/user/judgecaptcha.php?captcha="+ code + "&h_email=" + mail + "&callback=JSON_CALLBACK";
         $http.get(url).success(function(res){
           deferred.resolve(res);
         });
@@ -220,7 +328,7 @@ angular.module('starter.services', [])
         }
         console.log(mail);
         var deferred = $q.defer();
-        var url="http://183.175.12.168/Pets-Love/back-end/user/modifypassword.php?h_newpassword="+password+"&email=" + localStorage.findPwd + "&callback=JSON_CALLBACK";
+        var url="http://119.29.37.225/Pets-Love/back-end/user/modifypassword.php?h_newpassword="+password+"&email=" + localStorage.findPwd + "&callback=JSON_CALLBACK";
         $http.get(url).success(function(res){
           deferred.resolve(res);
         });

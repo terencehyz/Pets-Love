@@ -44,7 +44,7 @@
 		 	//向前端返回true,需要前端判断judge的值再做是否进行登录的决定
 		 	}
 		else{ 
-			$return['response']=-2 ;
+			$return['response']=-1 ;
 			$json=json_encode($return);
 			// $return =$callback."(".$json.")";
 			echo $json;

@@ -1,6 +1,6 @@
 <ion-view view-title="我的粉丝">
   <ion-content>
-    <ion-list>
+    <!--<ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" href="#">
         <img ng-src="img/tom.JPG">
         <h2>这是id</h2>
@@ -10,15 +10,15 @@
           关注
         </ion-option-button>
       </ion-item>
-    </ion-list>
+    </ion-list>-->
 
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="myfollower in follower" type="item-text-wrap" href="#">
-        <img ng-src="{{myfollower.face}}">
-        <h2>{{myfollower.account}}</h2>
-        <p>{{myfollower.mail}}</p>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="myfollower in follower" type="item-text-wrap">
+        <img ng-src="{{myfollower.h_photo}}">
+        <h2>{{myfollower.h_account}}</h2>
+        <p>用户位置：{{myfollower.h_location}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-assertive" ng-click="remove(myfollower)" ng-hide="">
+        <ion-option-button class="button-assertive" ng-click="tofollow(myfollower)">
           关注
         </ion-option-button>
       </ion-item>

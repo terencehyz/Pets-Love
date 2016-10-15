@@ -1,4 +1,5 @@
 <?php
+	header( 'Access-Control-Allow-Origin:*' ); 
 //需要判断是否重复
 	include_once('../mysql/connect.php');
 	include_once('../mysql/lib/mysql-fun.php');
@@ -9,14 +10,15 @@
 	// $pet_age='1';//$_POST['p_age'];
 	// $pet_about='1';//$_POST['p_about'];
 	// $sql="select * from pet where host_id='$pet_id'";
-	$new['id']="2";
-	$new['p_name']="1";
-	$new['p_sex']="1";
-	$new['p_type']="1";
-	$new['p_age']="1";
-	$new['host_id']="12";
-	$new['p_about']="1";
-	$new['p_detail_type']="1";
+	// $new['id']="2";
+	// $new['p_name']="1";
+	// $new['p_sex']="1";
+	// $new['p_type']="1";
+	// $new['p_age']="1";
+	// $new['host_id']="12";
+	// $new['p_about']="1";
+	// $new['p_detail_type']="1";
+	$new = $_GET;
 	$sql="select * from pet where host_id=$new[host_id]";
 	$query=mysql_query($sql);
 	while($str=mysql_fetch_assoc($query)){
@@ -32,21 +34,21 @@
 		}
 	}
 	if($judge==0){
-		$sql="update pet set p_name='new[pet_name]' and p_sex='new[pet_sex]' and p_type='new[pet_type]' and p_age='new[pet_age]' and p_about='new[pet_about]' where id=new[id] ";
+		$sql="update pet set p_name='$new[p_name]' , p_sex='$new[p_sex]' , p_type='$new[p_type]' , p_age='$new[p_age]' , p_about='$new[p_about]' , p_detail_type='$new[p_detail_type]'  where id=$new[id] ";
 		if(mysql_query($sql)){
-			$return =1;
+			$return['judge'] =1;
 			$json=json_encode($return);
 			echo $json;
 		}
 		else{
-			$return =0;
+			$return['judge'] =0;
 			$json=json_encode($return);
 			echo $json;
 		}
 	}
 	//如果有重复信息的话
 	else {
-		$return=0;
+		$return['judge']=0;
 		$json=json_encode($return);
 		echo $json;
 	}

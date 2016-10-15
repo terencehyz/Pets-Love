@@ -67,7 +67,7 @@
                 $token = $auth->uploadToken($bucket);
                $uploadMgr = new UploadManager();
                $filename = $name;
-               $uploadMgr->putFile($token,$filename,'D:/xampp/htdocs/Pets-Love/back-end/user/petsimg/'.$name);
+               $uploadMgr->putFile($token,$filename,'C:/xampp/htdocs/Pets-Love/back-end/user/petsimg/'.$name);
                $Outside_the_chain='http://ob82v1tc3.bkt.clouddn.com/'.$filename;
                $sql="insert into p_picture (pet_id,p_img) values ('$pet_id','$Outside_the_chain')";
                mysql_query($sql);

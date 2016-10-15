@@ -1,44 +1,28 @@
 <ion-view view-title="Pets' Love" style="background-color: #FF9800">
+  <ion-nav-buttons side="right">
+    <a class="button button-clear" ng-click="toSearch()">
+      <span class="icon ion-ios-search-strong"></span>
+    </a>
+  </ion-nav-buttons>
   <ion-content>
 
-    <ion-slide-box on-slide-changed="slideHasChanged($index)" auto-play="true" does-continue="true" slide-interval=4000 show-pager="true" pager-click="pageClick(index)" active-slide="model.activeIndex" delegate-handle="delegateHandler">
-      <!--此处可用ng-repeat-->
+    <ion-slide-box does-continue="true" auto-play="true" show-pager="ture">
       <ion-slide>
-        <a ng-href="{{list.url}}" target="_blank">
-          <div class="box blue">
-            <img src="https://images-na.ssl-images-amazon.com/images/G/01/img16/pet-products/vertical-store/cat-hero/desktop/32445_petsproducts_march-pets-site-flip-vertical-store_8_vd-hero_1920x693._CB299747913_.jpg" class="boximg">
-          </div>
-        </a>
+        <img src="{{slides.url1}}" height="200px" width="100%">
       </ion-slide>
       <ion-slide>
-        <div class="box yellow">
-          <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS3NAynMKuDppA9WBVyo85dZqO_wB0OynLzvcl5FPlXGRPkFN6vrA" class="boximg">
-        </div>
+        <img src="{{slides.url2}}" height="200px" width="100%">
       </ion-slide>
       <ion-slide>
-        <div class="box pink">
-          <img src="http://tworldy.com/wp-content/uploads/2015/08/Allergy-to-pet.jpg" class="boximg">
-        </div>
+        <img src="{{slides.url3}}" height="200px" width="100%">
       </ion-slide>
     </ion-slide-box>
 
-
-    <h3 style="color: white; margin-top: 6%; margin-left: 5%">
-      <i class="icon ion-bookmark"></i>
-      萌宠筛选
-    </h3>
-
-    <div id="search-bar">
-      <div class="item item-input-inset" style="background-color: #FF9800;border: none">
-        <label class="item-input-wrapper" id="search-input">
-          <i class="icon ion-search placeholder-icon"></i>
-          <input type="search" placeholder="Search" ng-model="query" ng-change="search(query)" autocorrect="off">
-        </label>
-        <button class="button button-stable button-small">
-          搜索
-        </button>
-      </div>
-    </div>
+    <!--<ion-slide-box does-continue="true" auto-play="true" show-pager="ture">
+      <ion-slide ng-repeat="slide in slides">
+        <img src="{{slide.photoUrl}}" height="200px" width="100%">
+      </ion-slide>
+    </ion-slide-box>-->
 
     <h3 style="color: white; margin-top: 6%; margin-left: 5%">
       <i class="icon ion-bookmark"></i>
@@ -47,43 +31,30 @@
 
     <div class="list">
 
-      <div class="item item-body" style="margin:3% 0;background-color: rgb(249,249,249)">
+      <div class="item item-body" style="margin:3% 0;background-color: rgb(249,249,249)" ng-repeat="petRecommend in allPetRecommend">
         <div>
-          <h2 style="color: rgb(113,113,113);font-weight: bolder">Sally</h2>
-          <p style="color: #BDBDBD">3岁 女生 哈士奇</p>
+          <h2 style="color: rgb(113,113,113);font-weight: bolder">{{petRecommend.p_name}}</h2>
+          <p style="color: #BDBDBD">{{petRecommend.p_age}}岁 {{petRecommend.p_sex}} {{petRecommend.p_type}} {{petRecommend.p_detail_type}}</p>
         </div>
-        <img src="img/dog1.jpg" style="width: 50%; margin-left: 25%">
-        <img src="img/dog2.jpg" style="width: 50%; margin-left: 25%" ng-repeat="" ng-show="">
-        <p>
-          This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-          the content is from a card-body consisting of an image and paragraph text. The footer
-        </p>
+        <img ng-src="{{petRecommend.p_img}}" style="width: 50%; margin-left: 25%">
+        <p>{{petRecommend.p_about}}</p>
         <div class="item item-avatar">
-          <img src="img/perry.png">
-          <h2 style="margin-top: 0px;margin-bottom: 0px">Marty McFly</h2>
-          <a href="#" style="text-decoration: none">Chat</a>
+          <img ng-src="{{petRecommend.h_photo}}">
+          <div class="row">
+            <div class="col-80">
+              <h2 style="margin-top: 0px;margin-bottom: 0px">主人 {{petRecommend.h_account}}</h2>
+              <h2 style="margin-top: 0px;margin-bottom: 0px">电话 {{petRecommend.h_call}}</h2>
+              <h2 style="margin-top: 0px;margin-bottom: 0px">邮箱 {{petRecommend.h_email}}</h2>
+            </div>
+            <div class="col-20">
+              <i class="icon ion-ios-person button button-light" ng-click="toFollow(petRecommend.host_id)"></i>
+              <br>
+              <i class="icon ion-ios-person-outline button button-light" ng-click="unFollow(petRecommend.host_id)"></i>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="list">
-        <div class="item item-body" style="margin:3% 0;background-color: rgb(249,249,249)">
-          <div style="margin-bottom: 5%">
-            <h2 style="color: rgb(113,113,113);font-weight: bolder">bada</h2>
-            <p style="color: #BDBDBD">1岁 男生 布吉岛</p>
-          </div>
-          <img src="img/dog2.jpg" style="width: 50%; margin-left: 25%">
-          <img src="img/dog2.jpg" style="width: 50%; margin-left: 25%" ng-repeat="" ng-show="">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, distinctio earum error esse eum expedita facilis ipsum iusto labore odit placeat, praesentium rerum sed temporibus ut veritatis voluptatibus. Accusamus, consequuntur!
-          </p>
-          <div class="item item-avatar">
-            <img src="img/perry.png">
-            <h2 style="margin-top: 0px;margin-bottom: 0px">Marty McFly</h2>
-            <a href="#" style="text-decoration: none">Chat</a>
-          </div>
-        </div>
-
     </div>
-
   </ion-content>
 </ion-view>

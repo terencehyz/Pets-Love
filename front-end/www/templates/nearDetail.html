@@ -1,0 +1,50 @@
+<ion-view view-title="{{data.host.h_account}}">
+  <ion-content>
+    <div class="list card">
+      <ion-item class="item item-avatar">
+        <img ng-src="{{data.host.h_photo}}">
+        <div class="row">
+          <div class="col-60">
+            <h2>{{data.host.h_account}}</h2>
+            <p>{{data.host.h_sex}}&nbsp;&nbsp;&nbsp;{{data.host.h_location}}</p>
+          </div>
+          <div class="col-40">
+            <i class="icon ion-ios-person button button-light" ng-click="toFollow(data.host.id)"></i>
+            <i class="icon ion-ios-person-outline button button-light" ng-click="unFollow(data.host.id)"></i>
+          </div>
+        </div>
+      </ion-item>
+      <a href="tel:{{data.host.h_call}}" class="item item-icon-left">
+        <i class="icon ion-ios-telephone"></i>
+        电话<p>{{data.host.h_call}}</p>
+      </a>
+      <a href="sms:{{data.host.h_call}}" class="item item-icon-left">
+        <i class="icon ion-chatbox-working"></i>
+        短信<p>{{data.host.h_call}}</p>
+      </a>
+      <a href="mailto:{{data.host.h_email}}?subject=PetsLove宠爱宠物咨询&body=%0d%0a来自Pets'Love宠爱应用%0d%0a" class="item item-icon-left">
+        <i class="icon ion-ios-email"></i>
+        邮箱<p>{{data.host.h_email}}</p>
+      </a>
+    </div>
+
+    <div class="list card">
+
+      <div ng-repeat="pet in data.host.pets" style="margin-bottom: 5px">
+
+        <div class="item item-avatar">
+          <img ng-src="{{pet.img}}">
+          <h2>{{pet.p_name}}</h2>
+          <p>{{pet.p_sex}} {{pet.p_age}} {{pet.p_type}} {{pet.p_detail_type}}</p>
+        </div>
+
+        <div class="item item-body">
+          <img class="full-image" ng-src="{{pet.img}}">
+          <p>{{pet.p_about}}</p>
+        </div>
+
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

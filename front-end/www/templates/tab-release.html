@@ -1,27 +1,24 @@
-<ion-view view-title="宠物" ng-controller="ReleaseCtrl">
+<ion-view view-title="宠物">
   <ion-nav-buttons side="right">
-    <a class="button button-clear" ng-click="addPet()"> 添加 </a>
+    <a class="button button-clear" ng-click="toAddPet()"> 添加 </a>
   </ion-nav-buttons>
-  <ion-content style="background-color: rgb(242,242,242)">
+  <ion-content style="background-color: #FF9800">
 
-    <div class="card" ng-hide="pets.length" style="margin-top: 10%">
+    <div class="card" style="margin-top: 10%" ng-hide="allPets.length">
       <div class="item item-text-wrap">
         还没有宠物，快来添加！
       </div>
     </div>
 
-    <div class="list card" ng-repeat="pet in pets">
-
-      <div class="item item-avatar">
-        <img src="{{pet.url}}">
-        <h2>{{pet.name}}</h2>
-        <p>{{pet.about}}</p>
-          <a class="subdued" ng-href="#/tab/petDetail/{{$index}}">
-            <i class="icon ion-ios-list-outline"></i>
-            更多
-          </a>
-      </div>
-
+    <div class="list card" ng-repeat="pet in allPets">
+      <a class="subdued" ng-href="#/tab/petDetail/?id={{$index}}">
+        <div class="item item-avatar">
+          <img src="{{pet.p_img}}">
+          <h2>{{pet.p_name}}</h2>
+          <p>{{pet.p_about}}</p>
+        </div>
+      </a>
     </div>
+
   </ion-content>
 </ion-view>

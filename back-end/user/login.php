@@ -11,6 +11,8 @@
 	//$array = json_decode($json,true);
 	$array['h_email']=$_GET['email'];//"yangyangds@imudges.com";//
 	$array['h_password']=$_GET['password'];//"123";
+	$array['h_longitude']=$_GET['h_longitude'];
+	$array['h_latitude']=$_GET['h_latitude'];
 	$user_array=fetch_assoc("host","h_email",$array['h_email']);
 	$judge=0;
 	//此处的$array['h_password']为本文件中两次md5加密后的密码，在与前端对接完成后需改为一次md5加密
@@ -26,13 +28,15 @@
 		if(update('host',"h_secret_key","$hash","h_email",$array['h_email'])){
 		//此处的yy为测试数据，后期需要修改,echo也需要删除
 			//echo "密钥更新成功！";
+			update('host',"h_longitude","$array[h_longitude]","h_email",$array['h_email']);
+			update('host',"h_latitude","$array[h_latitude]","h_email",$array['h_email']);
 		}
 		else{
 			//echo "密钥更新失败！";
 		}
 		$user_message=query('host','h_email',$array['h_email']);
-		require_once('showpet.php');
-		$data=showpet($hash);
+		//require_once('showpet.php');
+		//$data=showpet($hash);
 		//登录成功向前端返回h_secret_key judge和本人头像位置信息信息
 		
 		// $return ['judge']=1;
@@ -40,7 +44,14 @@
 		// $return ['h_photo']=$user_message['h_photo'];
 		// $return ['id']=$user_message['id'];
 		$user_message['judge']=1;
-		$user_message['pet']=$data;
+		/*if($data==0)
+		{
+			$user_message['pet']="";
+		}
+		else
+		{
+			$user_message['pet']=$data;
+		}*/
 		$json= json_encode($user_message);
 		echo $json;
  	}
